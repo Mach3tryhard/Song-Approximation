@@ -1,27 +1,20 @@
-import librosa
-import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.io import wavfile
 
-# 1. Load the MP3 (y is a NumPy array, sr is the sample rate)
-y, sr = librosa.load("your_file.mp3", sr=None, mono=False)
+sr, data = wavfile.read('3dimineata.wav')
+data = data[:10000]  # trim for performance
 
-# 2. If stereo, librosa returns shape=(2, n_samples). 
-#    For plotting you can pick one channel or both:
-if y.ndim == 2:
-    left, right = y
-    samples = left  # or combine, or plot both
-else:
-    samples = y
+if data.ndim == 2:
+    left = data[:, 0]
+    right = data[:, 1]
+    time = np.arange(len(left)) / sr
 
-# 3. Build time axis
-time = np.arange(len(samples)) / sr
-
-# 4. Plot
-plt.figure(figsize=(12, 4))
-plt.plot(time, samples, label="Waveform")
-plt.xlabel("Time (s)")
-plt.ylabel("Amplitude")
-plt.title("Waveform")
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot(time, left, right)
+    ax.set_xlabel('Time [s]')
+    ax.set_ylabel('Left Amplitude')
+    ax.set_zlabel('Right Amplitude')
+    plt.show()
