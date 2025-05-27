@@ -29,20 +29,20 @@ def spline_liniar(X, Y, x):
 
     return y_val
 
-with open(file_in, 'rb') as input:
-    stereo=int.from_bytes(input.read(1), 'big')
-    sizeof_data=int.from_bytes(input.read(1), 'big')
+with open(file_in, 'rb') as inp:
+    stereo=int.from_bytes(inp.read(1), 'big')
+    sizeof_data=int.from_bytes(inp.read(1), 'big')
     data_type=np.dtype("int"+str(sizeof_data*8))
-    sr=int.from_bytes(input.read(4), 'big')
-    data_count=int.from_bytes(input.read(4), 'big')
+    sr=int.from_bytes(inp.read(4), 'big')
+    data_count=int.from_bytes(inp.read(4), 'big')
     left=np.empty(data_count,dtype=data_type)
     for i in range (0, data_count):
-        x=int.from_bytes(input.read(sizeof_data), 'big', signed=True)
+        x=int.from_bytes(inp.read(sizeof_data), 'big', signed=True)
         left[i]=x
     if stereo==1:
         right=np.empty(data_count,dtype=data_type)
         for i in range (data_count):
-            x=int.from_bytes(input.read(sizeof_data), 'big', signed=True)
+            x=int.from_bytes(inp.read(sizeof_data), 'big', signed=True)
             right[i]=x
 
 k=1  # spline order
