@@ -12,7 +12,7 @@ start=TIME.time()
 # 4 bytes - data count
 # data
 
-sr, data = wavfile.read('chords_stereo.wav')  # original sampling rate and array of points on y axis
+sr, data = wavfile.read('queen.wav')  # original sampling rate and array of points on y axis
 scaling=5  # scaling factor
 
 #data = data[:10000]  # trim data set
@@ -68,7 +68,7 @@ if right is not None:  # stereo plot
     ax1.set_xlabel("Time [S]")
     ax1.set_ylabel("Amplitude")
     ax1.set_title("Left channel")
-    ax1.legend()
+    ax1.legend(loc='upper right')
     
     ax2.scatter(new_time, new_right, s=20, c='blue', label="New Right Data")
     ax2.scatter(time, right, s=1, c='red', label='Original Right Data')
@@ -76,7 +76,7 @@ if right is not None:  # stereo plot
     ax2.set_xlabel("Time [S]")
     ax2.set_ylabel("Amplitude")
     ax2.set_title("Right channel")
-    ax2.legend()
+    ax2.legend(loc='upper right')
     
     plt.tight_layout()
 
@@ -88,7 +88,7 @@ else:  # mono plot
     plt.xlabel("Time [S]")
     plt.ylabel("Amplitude")
     plt.title("Mono")
-    plt.legend()
+    plt.legend(loc='upper right')
     plt.tight_layout()
 
 end = TIME.time()
