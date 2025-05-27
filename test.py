@@ -7,6 +7,8 @@ from numpy.polynomial import Polynomial
 from scipy.interpolate import make_interp_spline,lagrange
 import sys
 
+np.set_printoptions(suppress=True)
+
 def spline_liniar(X, Y):
     y_val = np.zeros_like(X)
     # Pasul 1: Determinam coeficientii polinoamelor liniare pe fiecare subinterval
@@ -21,9 +23,7 @@ def spline_liniar(X, Y):
 
     return y_val
 
-np.set_printoptions(suppress=True)
-
-sr, data = wavfile.read('chords_mono.wav')  # original sampling rate and array of points on y axis
+sr, data = wavfile.read('queen.wav')  # original sampling rate and array of points on y axis
 scaling=10  # scaling factor
 k=3  # order of approximation 
 operation=1  # downscaling=0 / upscaling=1
@@ -40,22 +40,22 @@ else:  # stereo audio
     left = data[:, 0]
     right = data[:, 1]
 
-data_size = len(left)  # original number of data points
-time = np.arange(data_size) / sr  # original array of points on x axis
+data_count = len(left)  # original number of data points
+time = np.arange(data_count) / sr  # original array of points on x axis
 
 new_left = left[0::scaling]  # new array of points on y axis for left channel / mono
 if data.ndim !=1:
     new_right=right[0::scaling]  # new array of points on y axis for left channel
 new_time = time[0::scaling]  # new array of points on x axis
-new_data_size=len(new_left)  # new number of data points
+new_data_count=len(new_left)  # new number of data points
 new_sr=int(sr/scaling)  # new sampling rate
 
-if (data_size-1)%scaling != 0:  # adding the last data point only if it was left out
+if (data_count-1)%scaling != 0:  # adding the last data point only if it was left out
     new_left=np.append(new_left, left[-1])
     if data.ndim !=1:
         new_right=np.append(new_right, right[-1])
     new_time=np.append(new_time, time[-1])
-    new_data_size+=1
+    new_data_count+=1
 
 reconstructed_left = spline_liniar(new_time, new_left).astype(data_type)
 reconstructed=reconstructed_left
@@ -65,7 +65,7 @@ if data.ndim !=1:  # checking for stereo
 
 # # for debugging:
 # print(data)
-# print(reconstructed)
+print(reconstructed)
 # print(datatype)
 # print(len(reconstructed))
 # print(len(data))
@@ -74,7 +74,7 @@ if data.ndim !=1:  # checking for stereo
 # print(new_time)
 # print(len(time))
 # print(len(new_time))
-# print(new_left)
+print(new_left)
 
 wavfile.write("reconstructed_chords.wav", new_sr, reconstructed)
 

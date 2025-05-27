@@ -6,9 +6,6 @@ g = lambda x: np.e**(2*x)
 a,b = 0, 1
 
 
-x_grafic = np.linspace(X[0], X[-1], 201) # graf functie f)
-ax1.plot(x_grafic, g(x_grafic), linewidth=2) # graf f originala
-
 x_dens =  np.linspace(a, b, 500) # multe valori x din [a, b] pt a evalua spline-ul
 
 def spline_liniar(X, Y, x): # x e un array
@@ -22,7 +19,6 @@ def spline_liniar(X, Y, x): # x e un array
         #(x >= x0) returneaza un array cu elemente True unde x[] >= x0, la fel si celalalt dar <=. Operatorul AND lasa doar o valoare
         
         y_val[loc_interval] = y0 + (y1 - y0) / (x1 - x0) * (x[loc_interval] - x0)
-
 
     return y_val
         

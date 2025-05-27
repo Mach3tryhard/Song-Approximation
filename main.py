@@ -18,11 +18,11 @@ else: #stereo audio
     left = data[:, 0]
     right = data[:, 1]
 
-data_size = len(left) #spline points
+data_count = len(left) #spline points
 
-left = left[:data_size]
+left = left[:data_count]
 if right is not None:
-    right = right[:data_size]
+    right = right[:data_count]
 
 time = np.arange(len(left)) / sr # Nr de elemente din array pe sample rate pt a calcula timpul
 
