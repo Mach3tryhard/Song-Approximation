@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import wavfile
+import time as TIME
+
+start=TIME.time()
 
 # file format:
 # 1 byte - 0=mono, 1=stereo
@@ -62,9 +65,6 @@ if right is not None:  # stereo plot
     ax1.scatter(new_time, new_left, s=20, c='blue', label="New Left Data")
     ax1.scatter(time, left, s=1, c='red', label='Original Left Data')
 
-    # ax1.plot(new_time, new_left, color='blue', label="Spline Interpolated Left", linewidth=0.8)
-    # ax1.plot(time, left, color='red', label='Original Left', linewidth=0.5)
-
     ax1.set_xlabel("Time [S]")
     ax1.set_ylabel("Amplitude")
     ax1.set_title("Left channel")
@@ -72,9 +72,6 @@ if right is not None:  # stereo plot
     
     ax2.scatter(new_time, new_right, s=20, c='blue', label="New Right Data")
     ax2.scatter(time, right, s=1, c='red', label='Original Right Data')
-
-    # ax2.plot(new_time, new_right, color='blue', label="Spline Interpolated Right", linewidth=0.8)
-    # ax2.plot(time, right, color='red', label='Original Right', linewidth=0.5)
 
     ax2.set_xlabel("Time [S]")
     ax2.set_ylabel("Amplitude")
@@ -87,14 +84,14 @@ else:  # mono plot
     plt.figure(figsize=(10,6))
     plt.scatter(new_time, new_left, s=20, c='blue', label="New Mono Data")
     plt.scatter(time, left, s=1, c='red', label='Original Mono Data')
-    
-    # plt.plot(new_time, new_left, color='blue', label="Spline Interpolated Mono", linewidth=0.8)
-    # plt.plot(time, left, color='red', label='Original Mono', linewidth=0.5)
 
     plt.xlabel("Time [S]")
     plt.ylabel("Amplitude")
     plt.title("Mono")
     plt.legend()
     plt.tight_layout()
+
+end = TIME.time()
+print(f"Execution time: {end - start:.6f} seconds")
 
 plt.show()

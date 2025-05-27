@@ -14,14 +14,12 @@ start=TIME.time()
 
 def spline_liniar(X, Y, x):
     y_val = np.zeros_like(x)
-    for i in range(len(X) - 1):
-        x0, x1 = X[i], X[i+1]  # coeficienti
-        y0, y1 = Y[i], Y[i+1]
-
-        loc_interval = (x >= x0) & (x <= x1)
-        #(x >= x0) returneaza un array cu elemente True unde x[] >= x0, la fel si celalalt dar <=. Operatorul & lasa doar o valoare
-        
-        y_val[loc_interval] = y0 + (y1 - y0) / (x1 - x0) * (x[loc_interval] - x0)
+    indices = np.searchsorted(X, x, side='right') - 1
+    indices = np.clip(indices, 0, len(X) - 2)
+    x0, x1 = X[indices], X[indices+1]  # coefficients
+    y0, y1 = Y[indices], Y[indices+1]
+    
+    y_val = y0 + (y1 - y0) / (x1 - x0) * (x - x0)
 
     return y_val
 
