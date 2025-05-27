@@ -12,6 +12,10 @@ start=TIME.time()
 # 4 bytes - data count
 # data
 
+input = 'queen'
+file_in = input + '_compressed.bin'
+file_out = input + '_decompressed.wav'
+
 def spline_liniar(X, Y, x):
     y_val = np.zeros_like(x)
     indices = np.searchsorted(X, x, side='right') - 1
@@ -23,7 +27,7 @@ def spline_liniar(X, Y, x):
 
     return y_val
 
-with open('output.bin', 'rb') as input:
+with open(file_in, 'rb') as input:
     stereo=int.from_bytes(input.read(1), 'big')
     sizeof_data=int.from_bytes(input.read(1), 'big')
     data_type=np.dtype("int"+str(sizeof_data*8))
@@ -57,9 +61,10 @@ if stereo ==1:  # checking for stereo
 else:
     reconstructed=new_left
 
-wavfile.write("reconstructed_chords.wav", target_sr, reconstructed)
+wavfile.write(file_out, target_sr, reconstructed)
 
-print("done")
+end = TIME.time()
+print(f"Execution time: {end - start:.6f} seconds")
 
 if right is not None:  # stereo plot
     fig, (ax1, ax2)=plt.subplots(2,1,figsize=(10,6))
@@ -101,8 +106,5 @@ else:  # mono plot
     plt.title("Mono")
     plt.legend(loc='upper right')
     plt.tight_layout()
-
-end = TIME.time()
-print(f"Execution time: {end - start:.6f} seconds")
 
 plt.show()

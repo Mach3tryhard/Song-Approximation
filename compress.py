@@ -12,12 +12,17 @@ start=TIME.time()
 # 4 bytes - data count
 # data
 
-sr, data = wavfile.read('queen.wav')  # original sampling rate and array of points on y axis
-scaling=5  # scaling factor
+input = 'queen'
+file_in = input + '.wav'
+file_out = input + '_compressed.bin'
+
+scaling=2  # scaling factor
+
+sr, data = wavfile.read(file_in)  # original sampling rate and array of points on y axis
 
 #data = data[:10000]  # trim data set
 
-with open('output.bin', 'wb') as output:
+with open(file_out, 'wb') as output:
     if data.ndim ==1:  # mono audio
         left = data
         right = None
@@ -48,7 +53,7 @@ if (data_count-1)%scaling != 0:  # adding the last data point only if it was lef
     new_time=np.append(new_time, time[-1])
     new_data_count+=1
 
-with open('output.bin', 'ab') as output:
+with open(file_out, 'ab') as output:
     output.write(new_sr.to_bytes(4, byteorder='big'))  # 4 bytes - sampling rate
     output.write(new_data_count.to_bytes(4, byteorder='big'))  # 4 bytes - data count
     for i in range (new_data_count):
@@ -57,7 +62,8 @@ with open('output.bin', 'ab') as output:
         for i in range (new_data_count):
             output.write(int(new_right[i]).to_bytes(sizeof_data, byteorder='big', signed=True))  # bytes_size bytes - right channel data points
 
-print("done")
+end = TIME.time()
+print(f"Execution time: {end - start:.6f} seconds")
 
 if right is not None:  # stereo plot
     fig, (ax1, ax2)=plt.subplots(2,1,figsize=(10,6))
@@ -90,8 +96,5 @@ else:  # mono plot
     plt.title("Mono")
     plt.legend(loc='upper right')
     plt.tight_layout()
-
-end = TIME.time()
-print(f"Execution time: {end - start:.6f} seconds")
 
 plt.show()
