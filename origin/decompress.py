@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import wavfile
 import time as TIME
+from multiprocessing import Process
 from MetodeNumerice import spline_liniar
 from MetodeNumerice import spline_patratic
 from MetodeNumerice import spline_cubic
@@ -70,8 +71,6 @@ def Decompress_Alg(inp,metoda):
     end = TIME.time()
     print(f"Execution time: {end - start:.6f} seconds")
 
-<<<<<<< Updated upstream
-=======
     if stereo == 1:
         p = Process(
             target=plot_show,
@@ -85,7 +84,6 @@ def Decompress_Alg(inp,metoda):
     p.start()
 
 def plot_show(stereo,left,right,time,new_time,new_left,new_right):
->>>>>>> Stashed changes
     if stereo==1:  # stereo plot
         fig, (ax1, ax2)=plt.subplots(2,1,figsize=(10,6))
 

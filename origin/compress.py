@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import wavfile
 import time as TIME
+from multiprocessing import Process
 # file format:
 # 1 byte - 0=mono, 1=stereo
 # 1 byte - size of data type
@@ -9,7 +10,7 @@ import time as TIME
 # 4 bytes - data count
 # data
 
-def Compress_Alg(input,foce_mono):
+def Compress_Alg(input,force_mono):
     start=TIME.time()
 
     file_in = input + '.wav'
@@ -27,7 +28,7 @@ def Compress_Alg(input,foce_mono):
             right = None
             output.write(bytes([0]))  # 1 byte - 0=mono
         else:  # stereo audio
-            if foce_mono==True:
+            if force_mono==True:
                 left = data[:, 0]
                 right = None
                 output.write(bytes([0]))  # 1 byte - 0=mono
@@ -50,12 +51,6 @@ def Compress_Alg(input,foce_mono):
     new_data_count=len(new_left)  # new number of data points
     new_sr=int(sr/scaling)  # new sampling rate
 
-<<<<<<< Updated upstream
-    if foce_mono==True:
-        right=None
-
-=======
->>>>>>> Stashed changes
     if (data_count-1)%scaling != 0:  # adding the last data point only if it was left out
         new_left=np.append(new_left, left[-1])
         if data.ndim !=1 and force_mono == 0:
@@ -75,8 +70,6 @@ def Compress_Alg(input,foce_mono):
     end = TIME.time()
     print(f"Execution time: {end - start:.6f} seconds")
 
-<<<<<<< Updated upstream
-=======
     if data.ndim !=1 and force_mono == 0:
         p = Process(
             target=plot_show,
@@ -90,7 +83,6 @@ def Compress_Alg(input,foce_mono):
     p.start()
 
 def plot_show(left,right,time,new_time,new_left,new_right):
->>>>>>> Stashed changes
     if right is not None:  # stereo plot
         fig, (ax1, ax2)=plt.subplots(2,1,figsize=(10,6))
 
