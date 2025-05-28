@@ -5,6 +5,8 @@ import time as TIME
 from MetodeNumerice import spline_liniar
 from MetodeNumerice import spline_patratic
 from MetodeNumerice import spline_cubic
+from multiprocessing import Process
+
 # file format:
 # 1 byte - 0=mono, 1=stereo
 # 1 byte - size of data type
@@ -70,6 +72,13 @@ def Decompress_Alg(inp,metoda):
     end = TIME.time()
     print(f"Execution time: {end - start:.6f} seconds")
 
+    p = Process(
+        target=plot_show,
+        args=(stereo,left, right, time, new_time, new_left, new_right)
+    )
+    p.start()
+
+def plot_show(stereo,left,right,time,new_time,new_left,new_right):
     if stereo==1:  # stereo plot
         fig, (ax1, ax2)=plt.subplots(2,1,figsize=(10,6))
 
@@ -110,5 +119,4 @@ def Decompress_Alg(inp,metoda):
         plt.title("Mono")
         plt.legend(loc='upper right')
         plt.tight_layout()
-
-    #plt.show()
+    plt.show()
