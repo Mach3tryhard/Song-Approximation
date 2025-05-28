@@ -6,6 +6,8 @@ from multiprocessing import Process
 from MetodeNumerice import spline_liniar
 from MetodeNumerice import spline_patratic
 from MetodeNumerice import spline_cubic
+from multiprocessing import Process
+
 # file format:
 # 1 byte - 0=mono, 1=stereo
 # 1 byte - size of data type
@@ -124,5 +126,4 @@ def plot_show(stereo,left,right,time,new_time,new_left,new_right):
         plt.title("Mono Decompression")
         plt.legend(loc='upper right')
         plt.tight_layout()
-
-    #plt.show()
+    plt.show()

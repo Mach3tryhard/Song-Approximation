@@ -3,6 +3,7 @@ import numpy as np
 from scipy.io import wavfile
 import time as TIME
 from multiprocessing import Process
+
 # file format:
 # 1 byte - 0=mono, 1=stereo
 # 1 byte - size of data type
@@ -45,7 +46,7 @@ def Compress_Alg(input,force_mono):
     time = np.arange(data_count) / sr  # original array of points on x axis
 
     new_left = left[0::scaling]  # new array of points on y axis for left channel / mono
-    if data.ndim !=1:
+    if data.ndim !=1 and force_mono == 0:
         new_right=right[0::scaling]  # new array of points on y axis for left channel
     new_time = time[0::scaling]  # new array of points on x axis
     new_data_count=len(new_left)  # new number of data points
@@ -63,7 +64,7 @@ def Compress_Alg(input,force_mono):
         output.write(new_data_count.to_bytes(4, byteorder='big'))  # 4 bytes - data count
         for i in range (new_data_count):
             output.write(int(new_left[i]).to_bytes(sizeof_data, byteorder='big', signed=True))  # bytes_size bytes - left channel/mono data points
-        if data.ndim !=1:
+        if data.ndim !=1 and force_mono == 0:
             for i in range (new_data_count):
                 output.write(int(new_right[i]).to_bytes(sizeof_data, byteorder='big', signed=True))  # bytes_size bytes - right channel data points
 
@@ -104,7 +105,7 @@ def plot_show(left,right,time,new_time,new_left,new_right):
         
         plt.tight_layout()
 
-    else:  # mono plot
+    else:
         plt.figure(figsize=(10,6))
         plt.scatter(new_time, new_left, s=20, c='blue', label="New Mono Data")
         plt.scatter(time, left, s=1, c='red', label='Original Mono Data')
@@ -114,5 +115,4 @@ def plot_show(left,right,time,new_time,new_left,new_right):
         plt.title("Mono Compression")
         plt.legend(loc='upper right')
         plt.tight_layout()
-
-    #plt.show()
+    plt.show()
