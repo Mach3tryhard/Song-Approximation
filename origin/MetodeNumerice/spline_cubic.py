@@ -22,7 +22,7 @@ def spline_cubic(X, Y, x):
     y_eval = np.zeros_like(x)
 
     idx = np.searchsorted(X, x) - 1 # tot indexing optimizat
-    idx = np.clip(idx, 0, n - 2)
+    idx = np.clip(idx, 0, length_x - 2)
 
     x0 = X[idx]
     x1 = X[idx + 1]
