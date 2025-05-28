@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import wavfile
 import time as TIME
+from multiprocessing import Process
 from MetodeNumerice import spline_liniar
 from MetodeNumerice import spline_patratic
 from MetodeNumerice import spline_cubic
-from multiprocessing import Process
 
 # file format:
 # 1 byte - 0=mono, 1=stereo
@@ -72,51 +72,57 @@ def Decompress_Alg(inp,metoda):
     end = TIME.time()
     print(f"Execution time: {end - start:.6f} seconds")
 
-    p = Process(
-        target=plot_show,
-        args=(stereo,left, right, time, new_time, new_left, new_right)
-    )
+    if stereo == 1:
+        p = Process(
+            target=plot_show,
+            args=(stereo,left, right, time, new_time, new_left, new_right)
+        )
+    if stereo == 0:
+        p = Process(
+            target=plot_show,
+            args=(stereo,left, None, time, new_time, new_left, None)
+        )
     p.start()
 
 def plot_show(stereo,left,right,time,new_time,new_left,new_right):
     if stereo==1:  # stereo plot
         fig, (ax1, ax2)=plt.subplots(2,1,figsize=(10,6))
 
-        ax1.scatter(new_time, new_left, s=5, c='blue', label="New Left Data")
-        ax1.scatter(time, left, s=20, c='red', label='Original Left Data')
+        ax1.scatter(new_time, new_left, s=20, c='blue', label="New Left Data")
+        ax1.scatter(time, left, s=5, c='red', label='Compressed Left Data')
 
         ax1.plot(new_time, new_left, color='blue', label="Spline Interpolated Left", linewidth=0.8)
-        ax1.plot(time, left, color='red', label='Original Left', linewidth=0.5)
+        ax1.plot(time, left, color='red', label='Compressed Left', linewidth=0.5)
 
         ax1.set_xlabel("Time [S]")
         ax1.set_ylabel("Amplitude")
-        ax1.set_title("Left channel")
+        ax1.set_title("Left Channel Decompression")
         ax1.legend(loc='upper right')
         
-        ax2.scatter(new_time, new_right, s=5, c='blue', label="New Right Data")
-        ax2.scatter(time, right, s=20, c='red', label='Original Right Data')
+        ax2.scatter(new_time, new_right, s=20, c='blue', label="New Right Data")
+        ax2.scatter(time, right, s=5, c='red', label='Compressed Right Data')
 
         ax2.plot(new_time, new_right, color='blue', label="Spline Interpolated Right", linewidth=0.8)
-        ax2.plot(time, right, color='red', label='Original Right', linewidth=0.5)
+        ax2.plot(time, right, color='red', label='Compressed Right', linewidth=0.5)
 
         ax2.set_xlabel("Time [S]")
         ax2.set_ylabel("Amplitude")
-        ax2.set_title("Right channel")
+        ax2.set_title("Right Channel Decompression")
         ax2.legend(loc='upper right')
         
         plt.tight_layout()
 
     else:  # mono plot
         plt.figure(figsize=(10,6))
-        plt.scatter(new_time, new_left, s=5, c='blue', label="New Mono Data")
-        plt.scatter(time, left, s=20, c='red', label='Original Mono Data')
+        plt.scatter(new_time, new_left, s=20, c='blue', label="New Mono Data")
+        plt.scatter(time, left, s=5, c='red', label='Compressed Mono Data')
         
         plt.plot(new_time, new_left, color='blue', label="Spline Interpolated Mono", linewidth=0.8)
-        plt.plot(time, left, color='red', label='Original Mono', linewidth=0.5)
+        plt.plot(time, left, color='red', label='Compressed Mono', linewidth=0.5)
 
         plt.xlabel("Time [S]")
         plt.ylabel("Amplitude")
-        plt.title("Mono")
+        plt.title("Mono Decompression")
         plt.legend(loc='upper right')
         plt.tight_layout()
     plt.show()
