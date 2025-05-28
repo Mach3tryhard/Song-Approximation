@@ -70,7 +70,11 @@ def Compress_Alg(input,force_mono):
     end = TIME.time()
     print(f"Execution time: {end - start:.6f} seconds")
 
-    Process(target=plot_show(left,right,time,new_time,new_left,new_right)).start()
+    p = Process(
+        target=plot_show,
+        args=(left, right, time, new_time, new_left, new_right)
+    )
+    p.start()
 
 def plot_show(left,right,time,new_time,new_left,new_right):
     if right is not None:  # stereo plot
