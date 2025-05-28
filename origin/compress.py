@@ -58,7 +58,7 @@ def Compress_Alg(input,foce_mono):
 >>>>>>> Stashed changes
     if (data_count-1)%scaling != 0:  # adding the last data point only if it was left out
         new_left=np.append(new_left, left[-1])
-        if data.ndim !=1:
+        if data.ndim !=1 and force_mono == 0:
             new_right=np.append(new_right, right[-1])
         new_time=np.append(new_time, time[-1])
         new_data_count+=1
@@ -75,6 +75,22 @@ def Compress_Alg(input,foce_mono):
     end = TIME.time()
     print(f"Execution time: {end - start:.6f} seconds")
 
+<<<<<<< Updated upstream
+=======
+    if data.ndim !=1 and force_mono == 0:
+        p = Process(
+            target=plot_show,
+                args=(left, right, time, new_time, new_left, new_right)
+        )
+    else:
+        p = Process(
+            target=plot_show,
+                args=(left, None, time, new_time, new_left, None)
+        )
+    p.start()
+
+def plot_show(left,right,time,new_time,new_left,new_right):
+>>>>>>> Stashed changes
     if right is not None:  # stereo plot
         fig, (ax1, ax2)=plt.subplots(2,1,figsize=(10,6))
 
@@ -83,7 +99,7 @@ def Compress_Alg(input,foce_mono):
 
         ax1.set_xlabel("Time [S]")
         ax1.set_ylabel("Amplitude")
-        ax1.set_title("Left channel")
+        ax1.set_title("Left Channel Compression")
         ax1.legend(loc='upper right')
         
         ax2.scatter(new_time, new_right, s=20, c='blue', label="New Right Data")
@@ -91,7 +107,7 @@ def Compress_Alg(input,foce_mono):
 
         ax2.set_xlabel("Time [S]")
         ax2.set_ylabel("Amplitude")
-        ax2.set_title("Right channel")
+        ax2.set_title("Right Channel Compression")
         ax2.legend(loc='upper right')
         
         plt.tight_layout()
@@ -103,7 +119,7 @@ def Compress_Alg(input,foce_mono):
 
         plt.xlabel("Time [S]")
         plt.ylabel("Amplitude")
-        plt.title("Mono")
+        plt.title("Mono Compression")
         plt.legend(loc='upper right')
         plt.tight_layout()
 
