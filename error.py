@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import wavfile
 
-input = 'queen'
+input = 'chords_mono'
 file_original = input + '.wav'
 file_decompressed = input + '_decompressed.wav'
 
@@ -15,15 +15,15 @@ if data_original.ndim == 1 and data_decompressed.ndim == 1:  # mono audio
     left_decompressed = data_decompressed
     right_decompressed = None
     if len(left_original) != len(left_decompressed):
-        left_decompressed=left_decompressed[:-1]
+        left_decompressed=left_decompressed[:(len(left_original) - len(left_decompressed))]
 elif data_original.ndim == 2 and data_decompressed.ndim == 2:  # stereo audio
     left_original = data_original[:, 0]
     right_original = data_original[:, 1]
     left_decompressed = data_decompressed[:, 0]
     right_decompressed = data_decompressed[:, 1]
     if len(left_original) != len(left_decompressed):
-        left_decompressed=left_decompressed[:-1]
-        right_decompressed=right_decompressed[:-1]
+        left_decompressed=left_decompressed[:(len(left_original) - len(left_decompressed))]
+        right_decompressed=right_decompressed[:(len(left_original) - len(left_decompressed))]
 else:
     raise RuntimeError("Error: Files do not match")
 
