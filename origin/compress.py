@@ -88,7 +88,7 @@ def plot_show(left,right,time,new_time,new_left,new_right):
         fig, (ax1, ax2)=plt.subplots(2,1,figsize=(10,6))
 
         ax1.scatter(new_time, new_left, s=20, c='blue', label="New Left Data")
-        ax1.scatter(time, left, s=1, c='red', label='Original Left Data')
+        ax1.scatter(time, left, s=5, c='red', label='Original Left Data')
 
         ax1.set_xlabel("Time [S]")
         ax1.set_ylabel("Amplitude")
@@ -96,7 +96,7 @@ def plot_show(left,right,time,new_time,new_left,new_right):
         ax1.legend(loc='upper right')
         
         ax2.scatter(new_time, new_right, s=20, c='blue', label="New Right Data")
-        ax2.scatter(time, right, s=1, c='red', label='Original Right Data')
+        ax2.scatter(time, right, s=5, c='red', label='Original Right Data')
 
         ax2.set_xlabel("Time [S]")
         ax2.set_ylabel("Amplitude")
@@ -108,7 +108,7 @@ def plot_show(left,right,time,new_time,new_left,new_right):
     else:
         plt.figure(figsize=(10,6))
         plt.scatter(new_time, new_left, s=20, c='blue', label="New Mono Data")
-        plt.scatter(time, left, s=1, c='red', label='Original Mono Data')
+        plt.scatter(time, left, s=5, c='red', label='Original Mono Data')
 
         plt.xlabel("Time [S]")
         plt.ylabel("Amplitude")
