@@ -27,9 +27,14 @@ def Compress_Alg(input,foce_mono):
             right = None
             output.write(bytes([0]))  # 1 byte - 0=mono
         else:  # stereo audio
-            left = data[:, 0]
-            right = data[:, 1]
-            output.write(bytes([1]))  # 1 byte - 1=stereo
+            if foce_mono==True:
+                left = data[:, 0]
+                right = None
+                output.write(bytes([0]))  # 1 byte - 0=mono
+            else:
+                left = data[:, 0]
+                right = data[:, 1]
+                output.write(bytes([1]))  # 1 byte - 1=stereo
 
         data_type=type(left[0])  # data type for rewriting file
         sizeof_data=np.dtype(data_type).itemsize
@@ -45,9 +50,12 @@ def Compress_Alg(input,foce_mono):
     new_data_count=len(new_left)  # new number of data points
     new_sr=int(sr/scaling)  # new sampling rate
 
+<<<<<<< Updated upstream
     if foce_mono==True:
         right=None
 
+=======
+>>>>>>> Stashed changes
     if (data_count-1)%scaling != 0:  # adding the last data point only if it was left out
         new_left=np.append(new_left, left[-1])
         if data.ndim !=1:
