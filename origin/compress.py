@@ -46,7 +46,7 @@ def Compress_Alg(input,foce_mono):
     new_sr=int(sr/scaling)  # new sampling rate
 
     if foce_mono==True:
-        right=left
+        right=None
 
     if (data_count-1)%scaling != 0:  # adding the last data point only if it was left out
         new_left=np.append(new_left, left[-1])

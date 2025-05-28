@@ -89,9 +89,8 @@ class AudioApp:
         )
         messagebox.showinfo("Se Proceseaza", info)
 
-        if(selected_method=="spline_1"):
-            compress.Compress_Alg(self.wav_file[:-4], force_mono)
-            decompress.Decompress_Alg(self.wav_file[:-4], selected_method)
+        compress.Compress_Alg(self.wav_file[:-4], force_mono)
+        decompress.Decompress_Alg(self.wav_file[:-4], selected_method)
 
         
 if __name__ == "__main__":

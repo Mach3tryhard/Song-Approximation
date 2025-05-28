@@ -5,6 +5,8 @@ import time as TIME
 import sys
 sys.path.append('MetodeNumerice')
 import spline_liniar
+import spline_patratic
+import spline_cubic
 # file format:
 # 1 byte - 0=mono, 1=stereo
 # 1 byte - size of data type
@@ -45,9 +47,17 @@ def Decompress_Alg(inp,metoda):
     # ------ METODE DE APROXIMARE A FUNCTIEI ------
     print(f"Metoda de interpolare: {metoda}")
     if metoda == 'spline_1':
-        new_left = spline_liniar.spline_liniar(time, left, new_time).astype(data_type)  # new array of points on y axis for left channel / mono
+        new_left = spline_liniar.spline_liniar(time, left, new_time).astype(data_type)
         if stereo == 1:
-            new_right=spline_liniar.spline_liniar(time, right, new_time).astype(data_type)  # new array of points on y axis for left channel
+            new_right=spline_liniar.spline_liniar(time, right, new_time).astype(data_type)
+    if metoda == 'spline_2':
+        new_left = spline_patratic.spline_patratic(time, left, new_time).astype(data_type)
+        if stereo == 1:
+            new_right=spline_patratic.spline_patratic(time, right, new_time).astype(data_type)
+    if metoda == 'spline_3':
+        new_left = spline_cubic.spline_cubic(time, left, new_time).astype(data_type)
+        if stereo == 1:
+            new_right=spline_cubic.spline_cubic(time, right, new_time).astype(data_type)
     else:
         print("Metoda de interpolare necunoscuta!")
 
