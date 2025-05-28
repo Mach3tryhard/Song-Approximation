@@ -2,17 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import wavfile
 import time as TIME
-<<<<<<< Updated upstream
-import sys
-sys.path.append('MetodeNumerice')
-import spline_liniar
-import spline_patratic
-import spline_cubic
-=======
 from MetodeNumerice import spline_liniar
 from MetodeNumerice import spline_patratic
 from MetodeNumerice import spline_cubic
->>>>>>> Stashed changes
 # file format:
 # 1 byte - 0=mono, 1=stereo
 # 1 byte - size of data type
@@ -55,17 +47,6 @@ def Decompress_Alg(inp,metoda):
     if metoda == 'spline_1':
         new_left = spline_liniar.spline_liniar(time, left, new_time).astype(data_type)
         if stereo == 1:
-<<<<<<< Updated upstream
-            new_right=spline_liniar.spline_liniar(time, right, new_time).astype(data_type)
-    if metoda == 'spline_2':
-        new_left = spline_patratic.spline_patratic(time, left, new_time).astype(data_type)
-        if stereo == 1:
-            new_right=spline_patratic.spline_patratic(time, right, new_time).astype(data_type)
-    if metoda == 'spline_3':
-        new_left = spline_cubic.spline_cubic(time, left, new_time).astype(data_type)
-        if stereo == 1:
-            new_right=spline_cubic.spline_cubic(time, right, new_time).astype(data_type)
-=======
             new_right=spline_liniar.spline_liniar(time, right, new_time).astype(data_type)  # new array of points on y axis for left channel
     elif metoda == 'spline_2':
         new_left = spline_patratic.spline_patratic(time, left, new_time).astype(data_type)  # new array of points on y axis for left channel / mono
@@ -75,7 +56,6 @@ def Decompress_Alg(inp,metoda):
         new_left = spline_cubic.spline_cubic(time, left, new_time).astype(data_type)  # new array of points on y axis for left channel / mono
         if stereo == 1:
             new_right=spline_cubic.spline_cubic(time, right, new_time).astype(data_type)  # new array of points on y axis for left channel
->>>>>>> Stashed changes
     else:
         print("Metoda de interpolare necunoscuta!")
 
