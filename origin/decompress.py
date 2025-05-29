@@ -26,7 +26,7 @@ def Decompress_Alg(inp,metoda):
         sr=int.from_bytes(input.read(4), 'big')
         data_count=int.from_bytes(input.read(4), 'big')
         left=np.empty(data_count,dtype=data_type)
-        for i in range (0, data_count):
+        for i in range (data_count):
             x=int.from_bytes(input.read(sizeof_data), 'big', signed=True)
             left[i]=x
         if stereo==1:

@@ -21,8 +21,6 @@ def Compress_Alg(input,force_mono):
 
     sr, data = wavfile.read(file_in)  # original sampling rate and array of points on y axis
 
-    #data = data[:10000]  # trim data set
-
     with open(file_out, 'wb') as output:
         if data.ndim ==1:  # mono audio
             left = data
@@ -51,13 +49,6 @@ def Compress_Alg(input,force_mono):
     new_time = time[0::scaling]  # new array of points on x axis
     new_data_count=len(new_left)  # new number of data points
     new_sr=int(sr/scaling)  # new sampling rate
-
-    if (data_count-1)%scaling != 0:  # adding the last data point only if it was left out
-        new_left=np.append(new_left, left[-1])
-        if data.ndim !=1 and force_mono == 0:
-            new_right=np.append(new_right, right[-1])
-        new_time=np.append(new_time, time[-1])
-        new_data_count+=1
 
     with open(file_out, 'ab') as output:
         output.write(new_sr.to_bytes(4, byteorder='big'))  # 4 bytes - sampling rate
