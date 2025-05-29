@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import wavfile
 import time as TIME
-from multiprocessing import Process
+import platform
 from MetodeNumerice import spline_liniar
 from MetodeNumerice import spline_patratic
 from MetodeNumerice import spline_cubic
@@ -82,17 +82,33 @@ def Decompress_Alg(inp,metoda):
     end = TIME.time()
     print(f"Execution time: {end - start:.6f} seconds")
 
-    if stereo == 1:
-        p = Process(
-            target=plot_show,
-            args=(stereo, None, left, right, time, new_time, None, new_left, new_right)
-        )
-    if stereo == 0:
-        p = Process(
-            target=plot_show,
-            args=(stereo, data, None, None, time, new_time, new_data, None, None)
-        )
-    p.start()
+    if platform.system() == 'Windows':
+        from multiprocessing import Process
+        if stereo == 1:
+            p = Process(
+                target=plot_show,
+                args=(stereo, None, left, right, time, new_time, None, new_left, new_right)
+            )
+        if stereo == 0:
+            p = Process(
+                target=plot_show,
+                args=(stereo, data, None, None, time, new_time, new_data, None, None)
+            )
+        p.start()
+    elif platform.system() == 'Linux':
+        from threading import Thread
+        if stereo == 1:
+            t = Thread(
+                target=plot_show,
+                args=(stereo, None, left, right, time, new_time, None, new_left, new_right)
+            )
+        if stereo == 0:
+            t = Thread(
+                target=plot_show,
+                args=(stereo, data, None, None, time, new_time, new_data, None, None)
+            )
+        t.start()
+        t.join()
 
 def plot_show(stereo, data, left, right, time, new_time, new_data, new_left, new_right):
     if stereo==1:  # stereo plot

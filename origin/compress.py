@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import wavfile
 import time as TIME
-from multiprocessing import Process
+import platform
 
 # file format:
 # 1 byte - 0=mono, 1=stereo
@@ -75,22 +75,43 @@ def Compress_Alg(input,force_mono):
     end = TIME.time()
     print(f"Execution time: {end - start:.6f} seconds")
 
-    if data.ndim == 1:
-        p = Process(
-            target=plot_show,
-                args=(data, None, None, time, new_time, new_data, None, None)
-        )
-    elif force_mono == 1:
-        p = Process(
-            target=plot_show,
-                args=(data_forced, None, None, time, new_time, new_data, None, None)
-        )
-    else:
-        p = Process(
-            target=plot_show,
-                args=(None, left, right, time, new_time, None, new_left, new_right)
-        )
-    p.start()
+    if platform.system() == 'Windows':
+        from multiprocessing import Process
+        if data.ndim == 1:
+            p = Process(
+                target=plot_show,
+                    args=(data, None, None, time, new_time, new_data, None, None)
+            )
+        elif force_mono == 1:
+            p = Process(
+                target=plot_show,
+                    args=(data_forced, None, None, time, new_time, new_data, None, None)
+            )
+        else:
+            p = Process(
+                target=plot_show,
+                    args=(None, left, right, time, new_time, None, new_left, new_right)
+            )
+        p.start()
+    elif platform.system() == 'Linux':
+        from threading import Thread
+        if data.ndim == 1:
+            t = Thread(
+                target=plot_show,
+                    args=(data, None, None, time, new_time, new_data, None, None)
+            )
+        elif force_mono == 1:
+            t = Thread(
+                target=plot_show,
+                    args=(data_forced, None, None, time, new_time, new_data, None, None)
+            )
+        else:
+            t = Thread(
+                target=plot_show,
+                    args=(None, left, right, time, new_time, None, new_left, new_right)
+            )
+        t.start()
+        t.join()
 
 def plot_show(data, left, right, time, new_time, new_data, new_left, new_right):
     if right is not None:  # stereo plot
@@ -98,6 +119,7 @@ def plot_show(data, left, right, time, new_time, new_data, new_left, new_right):
 
         ax1.scatter(new_time, new_left, s=20, c='blue', label="New Left Data")
         ax1.scatter(time, left, s=5, c='red', label='Original Left Data')
+        ax1.plot(time, left, color='red', label='Left', linewidth=0.5)
 
         ax1.set_xlabel("Time [S]")
         ax1.set_ylabel("Amplitude")
@@ -106,6 +128,7 @@ def plot_show(data, left, right, time, new_time, new_data, new_left, new_right):
         
         ax2.scatter(new_time, new_right, s=20, c='blue', label="New Right Data")
         ax2.scatter(time, right, s=5, c='red', label='Original Right Data')
+        ax2.plot(time, right, color='red', label='Right', linewidth=0.5)
 
         ax2.set_xlabel("Time [S]")
         ax2.set_ylabel("Amplitude")
@@ -118,6 +141,7 @@ def plot_show(data, left, right, time, new_time, new_data, new_left, new_right):
         plt.figure(figsize=(10,6))
         plt.scatter(new_time, new_data, s=20, c='blue', label="New Mono Data")
         plt.scatter(time, data, s=5, c='red', label='Original Mono Data')
+        plt.plot(time, data, color='red', label='Mono', linewidth=0.5)
 
         plt.xlabel("Time [S]")
         plt.ylabel("Amplitude")
