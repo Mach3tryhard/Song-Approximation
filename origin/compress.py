@@ -23,58 +23,76 @@ def Compress_Alg(input,force_mono):
 
     with open(file_out, 'wb') as output:
         if data.ndim ==1:  # mono audio
-            left = data
+            left = None
             right = None
             output.write(bytes([0]))  # 1 byte - 0=mono
+            data_type=type(data[0])  # data type for rewriting file
+            data_count = len(data)  # original number of data points
         else:  # stereo audio
             if force_mono==True:
                 left = data[:, 0]
-                right = None
+                right = data[:, 1]
                 output.write(bytes([0]))  # 1 byte - 0=mono
+                data_type=type(left[0])  # data type for rewriting file
+                data_count = len(left)  # original number of data points
             else:
                 left = data[:, 0]
                 right = data[:, 1]
                 output.write(bytes([1]))  # 1 byte - 1=stereo
+                data_type=type(left[0])  # data type for rewriting file
+                data_count = len(left)  # original number of data points
 
-        data_type=type(left[0])  # data type for rewriting file
         sizeof_data=np.dtype(data_type).itemsize
         output.write(bytes([sizeof_data]))  # 1 byte - size of data type
+        time = np.arange(data_count) / sr  # original array of points on x axis
 
-    data_count = len(left)  # original number of data points
-    time = np.arange(data_count) / sr  # original array of points on x axis
-
-    new_left = left[0::scaling]  # new array of points on y axis for left channel / mono
-    if data.ndim !=1 and force_mono == 0:
+    if data.ndim == 1:
+        new_data = data[0::scaling]
+        new_data_count=len(new_data)  # new number of data points
+    elif force_mono == True:
+        data_forced = left
+        new_data = data_forced[0::scaling]
+        new_data_count=len(new_data)  # new number of data points
+    else:
+        new_left = left[0::scaling]  # new array of points on y axis for left channel / mono
         new_right=right[0::scaling]  # new array of points on y axis for left channel
+        new_data_count=len(new_left)  # new number of data points
     new_time = time[0::scaling]  # new array of points on x axis
-    new_data_count=len(new_left)  # new number of data points
     new_sr=int(sr/scaling)  # new sampling rate
 
     with open(file_out, 'ab') as output:
         output.write(new_sr.to_bytes(4, byteorder='big'))  # 4 bytes - sampling rate
         output.write(new_data_count.to_bytes(4, byteorder='big'))  # 4 bytes - data count
-        for i in range (new_data_count):
-            output.write(int(new_left[i]).to_bytes(sizeof_data, byteorder='big', signed=True))  # bytes_size bytes - left channel/mono data points
-        if data.ndim !=1 and force_mono == 0:
+        if data.ndim == 1 or force_mono == True:
+            for i in range (new_data_count):
+                output.write(int(new_data[i]).to_bytes(sizeof_data, byteorder='big', signed=True))  # bytes_size bytes - mono data points
+        else:
+            for i in range (new_data_count):
+                output.write(int(new_left[i]).to_bytes(sizeof_data, byteorder='big', signed=True))  # bytes_size bytes - left channel/mono data points
             for i in range (new_data_count):
                 output.write(int(new_right[i]).to_bytes(sizeof_data, byteorder='big', signed=True))  # bytes_size bytes - right channel data points
 
     end = TIME.time()
     print(f"Execution time: {end - start:.6f} seconds")
 
-    if data.ndim !=1 and force_mono == 0:
+    if data.ndim == 1:
         p = Process(
             target=plot_show,
-                args=(left, right, time, new_time, new_left, new_right)
+                args=(data, None, None, time, new_time, new_data, None, None)
+        )
+    elif force_mono == 1:
+        p = Process(
+            target=plot_show,
+                args=(data_forced, None, None, time, new_time, new_data, None, None)
         )
     else:
         p = Process(
             target=plot_show,
-                args=(left, None, time, new_time, new_left, None)
+                args=(None, left, right, time, new_time, None, new_left, new_right)
         )
     p.start()
 
-def plot_show(left,right,time,new_time,new_left,new_right):
+def plot_show(data, left, right, time, new_time, new_data, new_left, new_right):
     if right is not None:  # stereo plot
         fig, (ax1, ax2)=plt.subplots(2,1,figsize=(10,6))
 
@@ -98,8 +116,8 @@ def plot_show(left,right,time,new_time,new_left,new_right):
 
     else:
         plt.figure(figsize=(10,6))
-        plt.scatter(new_time, new_left, s=20, c='blue', label="New Mono Data")
-        plt.scatter(time, left, s=5, c='red', label='Original Mono Data')
+        plt.scatter(new_time, new_data, s=20, c='blue', label="New Mono Data")
+        plt.scatter(time, data, s=5, c='red', label='Original Mono Data')
 
         plt.xlabel("Time [S]")
         plt.ylabel("Amplitude")
