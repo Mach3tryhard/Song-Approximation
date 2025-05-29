@@ -72,7 +72,7 @@ def Decompress_Alg(inp,metoda):
         print("Metoda de interpolare necunoscuta!")
 
     # --------------------------------------------
-    if stereo ==1:  # checking for stereo
+    if stereo == 1:  # checking for stereo
         reconstructed=np.c_[new_left, new_right]  # adding right channel to reconstruction
     else:
         reconstructed=new_data

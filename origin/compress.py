@@ -22,7 +22,7 @@ def Compress_Alg(input,force_mono):
     sr, data = wavfile.read(file_in)  # original sampling rate and array of points on y axis
 
     with open(file_out, 'wb') as output:
-        if data.ndim ==1:  # mono audio
+        if data.ndim == 1:  # mono audio
             left = None
             right = None
             output.write(bytes([0]))  # 1 byte - 0=mono
@@ -31,7 +31,7 @@ def Compress_Alg(input,force_mono):
         else:  # stereo audio
             if force_mono==True:
                 left = data[:, 0]
-                right = data[:, 1]
+                right = None
                 output.write(bytes([0]))  # 1 byte - 0=mono
                 data_type=type(left[0])  # data type for rewriting file
                 data_count = len(left)  # original number of data points
