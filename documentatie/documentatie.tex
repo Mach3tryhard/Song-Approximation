@@ -1,0 +1,164 @@
+\documentclass[english]{article}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{natbib}
+\newcommand{\LaTeXs}{\LaTeX{\/} }
+\newcommand{\matlabs}{{\sc Matlab{\/} }}
+\newcommand{\matlab}{{\sc Matlab}}
+\begin{document}
+
+\title{Aproximarea unei melodii folosind mai multe metode de calcul numeric}
+
+\author{
+  Popa Mircea Alex \\
+  Sîrghe Matei Ștefan \\
+  Ungureanu Robert
+}
+
+\maketitle
+
+\section{Modelul matematic}\label{Modelul}
+\begin{itemize}
+\item Modelul ales de noi începe de la orice fișier audio de tip .wav.\\
+\item Fișierul audio poate să fie interpretat ca o amplitudine în funcție de timp. Astfel, putem să ne imaginăm că avem o funcție de tipul $f(t)$, unde $t$ este timpul și $f(t)$ este amplitudinea sunetului la acel moment.\\
+\item Ca să interpretăm funcția cu acuratețe mai mare, vom aplica Short-Time Fourier Transform, care ne va permite să vedem frecvențele care compun sunetul.\\
+\item Astfel o sa ajungem cu o functie $F(\omega,t)$ cu care o sa putem sa modelăm o spectrogramă și pe care o să o putem interpreta ca o matrice.\\
+\item Vom aplica SVD (Singular Value Decomposition) pe matricea $F(\omega,t)$, folosind factorizarea QR.\\
+\item Am aplicat SVD, vom obține matricea $F(\omega,t) \approx U \Sigma V^T$, unde $U$ și $V$ sunt matricele ortogonale și $\Sigma$ este o matrice diagonală cu valorile pozitive.\\
+\item Inmulțim cele 3 matrici, obținem o aproximare la matricea originală $G(\omega,t)$. \\ 
+\item Cu matricea $G(\omega,t)$ vom calcula Short-Time Fourier Transform inversă, care ne va permite să obținem o nouă funcție $g(t)$, aproximarea funcției originale $f(t)$.\\
+\item Cu aproximarea $g(t)$ vom putea să obținem un nou fișier audio .wav, care este o aproximare a fișierului original.\\
+\end{itemize}
+
+\begin{equation}
+\begin{cases}
+F(\tau,\omega) = \Sigma_{t=0}^{N-1} f(t) w(t-\tau) e^{-i\omega t} \\[6pt]
+g(t) = \frac{1}{w(t-\tau)} \frac{1}{2\pi} \Sigma_{\omega=0}^{N-1} G(\tau,\omega) e^{+i\omega t} \\[6pt]
+F(i,j) = A_{i,j} , A \in \mathbb{M}_{N,M} (\mathbb{C}) \\[6pt]
+G(i,j) = B_{i,j} , B \in \mathbb{M}_{N,M} (\mathbb{C}) \\[6pt]
+A \approx U\Sigma V^T = B \\[6pt]
+w(n)=\frac{1}{2}[1+cos(\frac{2\pi n}{L})] , w:\mathbb{R} \rightarrow \mathbb{R} \\[6pt]
+\end{cases}
+\end{equation}
+
+\begin{itemize}
+	\item $w(n)$ este window function Hann
+    \item $A$ și $B$ sunt matricele de amplitudine și frecvență
+	\item $B$ se calculează utilizând metoda SVD și factorizarea Gram-Schmidt
+\end{itemize}
+
+\section{Discretizarea domeniului}\label{methods}
+
+Domeniul este reprezentat de catre durata melodiei care este înmultită cu sampling rate-ul de 44100 Hz.
+
+\begin{equation}
+N = \text{l} \times h
+\end{equation}
+
+\begin{itemize}
+	\item $l$ este durata melodiei în secunde
+    \item $h$ este sampling rate-ul default de 44100 Hz
+\end{itemize}
+
+\section{Transformata Fourier}\label{Modelul}
+
+Teoretic vorbind, Short-Time Fourier Transform este:
+\begin{equation}
+    F(\tau,\omega)=\int_{-\inf}^{+\inf}f(t)w(t-\tau)e^{-i\omega t}dt
+\end{equation}
+ dar funcția $f(t)$ este discretizată, deci vom folosi suma discretă ca să calculăm $F(\tau,\omega)$.
+
+\begin{equation}
+    F(\tau,\omega) = \Sigma_{t=0}^{N-1} f(t) w(t-\tau) e^{-i\omega t}
+\end{equation}
+
+Cu funcția $F(\tau,\omega)$ vom calcula spectograma originală pe care o vom nota cu $S_{o}$\\
+
+\begin{equation}
+	S_{o} = \begin{bmatrix}
+		F(\tau_{1},\omega_{M})^{2} & F(\tau_{2},\omega_{M})^{2} & ... & F(\tau_{N},\omega_{M})^{2} \\
+        ... & ... & ... & ... \\
+		F(\tau_{1},\omega_{2})^{2} & F(\tau_{2},\omega_{2})^{2} & ... & F(\tau_{N},\omega_{2})^{2} \\
+        F(\tau_{1},\omega_{1})^{2} & F(\tau_{2},\omega_{1})^{2} & ... & F(\tau_{N},\omega_{1})^{2} \\
+	\end{bmatrix}
+\end{equation}
+
+\section{Sistemului Liniar}\label{Modelul}
+
+In același timp, vom avea matricea:
+
+\begin{equation}
+	A = \begin{bmatrix}
+		F(\tau_{1},\omega_{1}) & F(\tau_{1},\omega_{2}) & ... & F(\tau_{1},\omega_{M}) \\
+        F(\tau_{2},\omega_{1}) & F(\tau_{2},\omega_{2}) & ... & F(\tau_{2},\omega_{M}) \\
+        ... & ... & ... & ... \\
+        F(\tau_{N},\omega_{1}) & F(\tau_{N},\omega_{2}) & ... & F(\tau_{N},\omega_{M}) \\
+	\end{bmatrix}
+\end{equation}
+
+Teoretic vorbind, factorizarea SVD este:
+\begin{equation}
+    A = U \Sigma V^T
+\end{equation}
+ dar o să avem eroare cauzată de floating point, deci vom obține o matrice aproximativă $B$ care este diferită de cea de la care am pornit.
+
+\begin{equation}
+    B = U \Sigma V^T \approx A
+\end{equation}
+
+Putem să creăm o funcție $G(\tau,\omega)$ care primeste valorile din matricea $B$ și care este definită ca:
+\begin{equation}
+    G(\tau,\omega) = \begin{cases}
+        B_{i,j} & \text{dacă } i \leq N \text{ și } j \leq M \\[6pt]
+        0 & \text{altfel}
+    \end{cases}
+\end{equation}
+
+Utilizând noua funcție, putem crea o nouă spectogramă care o să ne arate eroarea de aproximare pe care o avem:
+
+\begin{equation}
+	S_{e} = \begin{bmatrix}
+		|F(\tau_{1},\omega_{M})^{2} - G(\tau_{1},\omega_{M})^{2}| & |F(\tau_{2},\omega_{M})^{2} - G(\tau_{2},\omega_{M})^{2}| & ... & |F(\tau_{N},\omega_{M})^{2} - G(\tau_{N},\omega_{M})^{2}| \\
+        ... & ... & ... & ... \\
+		|F(\tau_{1},\omega_{2})^{2} - G(\tau_{1},\omega_{2})^{2}| & |F(\tau_{2},\omega_{2})^{2} - G(\tau_{2},\omega_{2})^{2}| & ... & |F(\tau_{N},\omega_{2})^{2} - G(\tau_{N},\omega_{2})^{2}| \\
+        |F(\tau_{1},\omega_{1})^{2} - G(\tau_{1},\omega_{1})^{2}| & |F(\tau_{2},\omega_{M})^{2} - G(\tau_{2},\omega_{M})^{2}| & ... & |F(\tau_{N},\omega_{1})^{2} - G(\tau_{N},\omega_{1})^{2}| \\
+	\end{bmatrix}
+\end{equation}
+
+\section{Transformata Fourier Inversă}\label{Modelul}
+
+Calculam aproximarea funcției originale $f(t)$ folosind Short-Time Fourier Transform inversă.
+
+Teoretic vorbind, Short-Time Fourier Transform inversă este:
+\begin{equation}
+    g(t) = \frac{1}{w(t-\tau)} \frac{1}{2\pi} \int_{-\inf}^{+\inf} G(\tau,\omega) e^{+i\omega t} d\omega
+\end{equation}
+
+dar funcția $G(\tau,\omega)$ este discretizată, deci vom folosi suma discretă ca să calculăm $g(t)$.
+
+\begin{equation}
+    g(t) = \frac{1}{w(t-\tau)} \frac{1}{2\pi} \Sigma_{\omega=0}^{N-1} G(\tau,\omega) e^{+i\omega t} \\[6pt]
+\end{equation}
+
+Cu funcția $g(t)$ vom creea o nouă funcție care reprezintă eroarea la un anumit timp $f_{ea}$ și funcția $f_{cea}$ care reprezină eroarea cumulată a aproximării.
+\begin{equation}
+    f_{cea} = \Sigma_{t=0}^{N-1} |f(t) - g(t)| \\[4pt]
+\end{equation}
+\begin{equation}
+    f_{ea} = |f(t) - g(t)|
+\end{equation}
+
+\end{document}
