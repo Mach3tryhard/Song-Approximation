@@ -11,13 +11,15 @@ import os
 # Configs
 file_path = 'song_chopped.wav'
 output_path_name = 'reconstructed_sample.wav'
-nr_valori_singulare = -1 # -1 pt calcul automat de k
-use_griffin_lim = True  # Daca e true, nu vom folosi phase-ul original ci il vom aproxima cu algoritmul Griffin Lim
+nr_valori_singulare = 1 # -1 pt calcul automat de k
+use_griffin_lim = False  # Daca e true, nu vom folosi phase-ul original ci il vom aproxima cu algoritmul Griffin Lim
 griffin_lim_iterations = 50  
 use_numpy_svd = True #Self-explanatory.
 use_librosa_transforms = True #La fel ca la svd, ori rulam functiile noastre ori functiile librosa
 #write_binary = True #scrie matriciile SVD intr-un fisier binar
 #read_binary = True // nu e worth, aparent scrii mai mult decat fisierul original
+
+#Pt un cod rulabil a nu se utiliza simultan si functiile proprii fourier si svd, timpul de procesare este prea mare
 
 def my_fft_recursiv(x):
     #Algoritmul Cooley-Tukey recursiv, Radix-2
@@ -49,7 +51,7 @@ def my_stft(signal, fft_size=1024, hop_size=512, window_fn=np.hanning):
         start = i * hop_size
         frame = signal[start:start+fft_size] * window
         stft_matrix[i, :] = my_fft_recursiv(frame)
-
+    
     return stft_matrix
 
 def my_ifft_recursiv(x):
@@ -209,9 +211,13 @@ def plot_waveform_comparison(original, reconstructed, sr, channel_name, filename
 
 
 
-def reconstruct_audio(magnitude, phase, sr, output_path="out_SVD_simplu.wav"):
+def reconstruct_audio(magnitude, phase, sr):
     stft_reconstructed = magnitude * np.exp(1j * phase)
-    audio_reconstructed = librosa.istft(stft_reconstructed)
+    if use_librosa_transforms:
+        audio_reconstructed = librosa.istft(stft_reconstructed)
+    else:
+        audio_reconstructed = my_istft(stft_reconstructed)
+    
     audio_reconstructed = audio_reconstructed / np.max(np.abs(audio_reconstructed))
     #wavfile.write(output_path, sr, (audio_reconstructed * 32767).astype(np.int16)) <- acm scriem fisierul din __main__
     return audio_reconstructed
@@ -225,12 +231,20 @@ def griffin_lim(magnitude, n_iter=50, window='hann', n_fft=2048, hop_length=None
     stft = magnitude * angles
     
     for _ in range(n_iter):
-        audio = librosa.istft(stft, hop_length=hop_length, window=window)
-        stft = librosa.stft(audio, n_fft=n_fft, hop_length=hop_length, window=window)
+        if use_librosa_transforms:
+            audio = librosa.istft(stft, hop_length=hop_length, window=window)
+            stft = librosa.stft(audio, n_fft=n_fft, hop_length=hop_length, window=window)
+        else:
+            audio = my_istft(stft)
+            stft = my_stft(audio)
+        
         angles = np.exp(1j * np.angle(stft))
         stft = magnitude * angles
         
-    audio = librosa.istft(stft, hop_length=hop_length, window=window)
+    if use_librosa_transforms:
+        audio = librosa.istft(stft, hop_length=hop_length, window=window)
+    else:
+        audio = my_istft(stft)
     return audio
 
 def Gram_Schmidt(A):
@@ -302,7 +316,7 @@ def solve_SVD(spect, k=100):
         k = np.searchsorted(energy, 0.95 * energy[-1]) + 1 #95% din valorile din matricea sigma. Teoretic acest approach poate scoate noise si alte elemente irelevante din matrice
     
     k = min(k, len(singular_values))
-    
+    print(f"{k} Valori proprii")
     
     def compute_u(i):
         if singular_values[i] > 1e-10:
@@ -313,7 +327,7 @@ def solve_SVD(spect, k=100):
     
     return U, singular_values[:k], v[:, :k].T
 
-def svd_wrapper_compression(spectrogram, k=100):
+def svd_wrapper_compression(spectrogram, k):
     if use_numpy_svd:
         U, S, Vt = np.linalg.svd(spectrogram, full_matrices=False)
         if k > 0:
@@ -344,8 +358,12 @@ def process_audio():
     if data.ndim > 1:
         data = np.mean(data, axis=1)
     
+    if use_librosa_transforms:
+        stft = librosa.stft(data)
+    else:
+        stft = my_stft(data)
+
     
-    stft = librosa.stft(data)
     magnitude = np.abs(stft)
     phase = np.angle(stft)
     
@@ -418,7 +436,7 @@ if __name__ == "__main__":
     if original_data.ndim > 1:
         original_data = np.mean(original_data, axis=1)
 
-    
+    #aici nu voi folosi functiile proprii, e doar pt plotting
     stft_orig = librosa.stft(original_data)
     stft_recon = librosa.stft(audio_output)
     mag_orig = np.abs(stft_orig)
