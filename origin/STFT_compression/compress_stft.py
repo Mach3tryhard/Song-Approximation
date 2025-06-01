@@ -157,7 +157,7 @@ def single_frequency(times, sr, samples_per_frame, data_count, data_type, freque
         return f, idx_out, val_out, component
 
 
-def STFT(file_out_direct, data, sr, frequency_step, frequency_cutoff, noise_threshold):
+def STFT(data, sr, frequency_step, frequency_cutoff, noise_threshold):
 
     data_type=type(data[0])
     samples_per_frame = sr // frequency_step
