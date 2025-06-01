@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.1 (MiKTeX 24.4) (format=lualatex 2025.1.10)  1 JUN 2025 21:13
+This is LuaHBTeX, Version 1.18.1 (MiKTeX 24.4) (format=lualatex 2025.1.10)  1 JUN 2025 23:51
  restricted system commands enabled.
 **./documentatie.tex
 (./documentatie.tex
@@ -977,13 +977,19 @@ File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
 File: listings.cfg 2024/09/23 1.10c listings configuration
 ))
 Package: listings 2024/09/23 1.10c (Carsten Heinz)
-(C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/latex/listings/lstlang1.sty
+(C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/latex/caption/subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count341
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count342
+) (C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 (C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-lua
 tex.def
 File: l3backend-luatex.def 2024-05-08 L3 backend support: PDF output (LuaTeX)
-\l__color_backend_stack_int=\count341
+\l__color_backend_stack_int=\count343
 Inserting `l3color' in `luaotfload.parse_color'.
 \l__pdf_internal_box=\box83
 ) (./documentatie.aux
@@ -999,27 +1005,27 @@ LaTeX Warning: Label `Modelul' multiply defined.
 )
 \openout1 = documentatie.aux
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 67.
-LaTeX Font Info:    ... okay on input line 67.
-Package hyperref Info: Link coloring ON on input line 67.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+Package hyperref Info: Link coloring ON on input line 68.
  (./documentatie.out) (./documentatie.out)
 \@outlinefile=\write4
 
@@ -1028,16 +1034,16 @@ Package hyperref Info: Link coloring ON on input line 67.
 (C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/context/base/mkii/supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count342
+\scratchcounter=\count344
 \scratchdimen=\dimen320
 \scratchbox=\box84
-\nofMPsegments=\count343
-\nofMParguments=\count344
+\nofMPsegments=\count345
+\nofMParguments=\count346
 \everyMPshowfont=\toks54
-\MPscratchCnt=\count345
+\MPscratchCnt=\count347
 \MPscratchDim=\dimen321
-\MPnumerator=\count346
-\makeMPintoPDFobject=\count347
+\MPnumerator=\count348
+\makeMPintoPDFobject=\count349
 \everyMPtoPDFconversion=\toks55
 )
 (C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/latex/epstopdf-pkg/epstopdf-b
@@ -1060,25 +1066,20 @@ Package caption Info: End \AtBeginDocument code.
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into 
 your preamble.
- on input line 67.
+ on input line 68.
 
-\c@lstlisting=\count348
-LaTeX Font Info:    Trying to load font information for U+msa on input line 77.
+\c@lstlisting=\count350
+LaTeX Font Info:    Trying to load font information for U+msa on input line 78.
 
 (C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 77.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 78.
 
 
 (C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 81--82
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 82--83
 
  []
@@ -1104,15 +1105,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 86--87
  []
 
 
-
-[1
-
-{C:/Users/matei/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
 Underfull \hbox (badness 10000) in paragraph at lines 87--88
 
  []
 
 
+
+[1
+
+{C:/Users/matei/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
 Underfull \hbox (badness 10000) in paragraph at lines 88--89
 
  []
@@ -1123,18 +1124,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 89--90
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 90--91
+
+ []
+
+
 
 [2]
 
 [3]
 
 [4]
-Overfull \hbox (66.00684pt too wide) detected at line 218
+Overfull \hbox (66.00684pt too wide) detected at line 219
 [][][]\OML/cmm/m/it/12 S[] \OT1/cmr/m/n/12 = []
  []
 
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 248.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 249.
 
 
 [5]
@@ -1152,13 +1158,13 @@ LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
 [11]
 
 [12]
-Overfull \hbox (0.10104pt too wide) in paragraph at lines 498--499
+Overfull \hbox (0.10104pt too wide) in paragraph at lines 499--500
 []\TU/lmr/m/n/12 Out-put: Cele trei array-ul, U, Sigma(în funcție nu-mită sin
 gular-values),
  []
 
 
-Overfull \hbox (6.20024pt too wide) in paragraph at lines 499--500
+Overfull \hbox (6.20024pt too wide) in paragraph at lines 500--501
 []\TU/lmr/m/n/12 Al-go-rit-mul ur-mărește cla-sica vari-antă teo-ret-ică de SVD. Ape-leaz
 ă funcți-
  []
@@ -1168,48 +1174,123 @@ Overfull \hbox (6.20024pt too wide) in paragraph at lines 499--500
 [13]
 
 [14]
-<spectrogram_original.png, id=385, 867.24pt x 433.62pt>
+<spectrogram_original.png, id=397, 867.24pt x 433.62pt>
 File: spectrogram_original.png Graphic file (type png)
 <use spectrogram_original.png>
-Package luatex.def Info: spectrogram_original.png  used on input line 547.
+Package luatex.def Info: spectrogram_original.png  used on input line 548.
 (luatex.def)             Requested size: 350.99762pt x 175.50266pt.
-<spectrogram_reconstructed.png, id=386, 867.24pt x 433.62pt>
+<spectrogram_reconstructed.png, id=398, 867.24pt x 433.62pt>
 File: spectrogram_reconstructed.png Graphic file (type png)
 <use spectrogram_reconstructed.png>
-Package luatex.def Info: spectrogram_reconstructed.png  used on input line 554.
+Package luatex.def Info: spectrogram_reconstructed.png  used on input line 555.
 
 (luatex.def)             Requested size: 350.99762pt x 175.50266pt.
-<3dog.png, id=387, 669.2503pt x 590.95781pt>
+<3dog.png, id=399, 669.2503pt x 590.95781pt>
 File: 3dog.png Graphic file (type png)
 <use 3dog.png>
-Package luatex.def Info: 3dog.png  used on input line 561.
-(luatex.def)             Requested size: 234.00238pt x 206.63092pt.
+Package luatex.def Info: 3dog.png  used on input line 562.
+(luatex.def)             Requested size: 253.49762pt x 223.84491pt.
 
 
 [15<./spectrogram_original.png><./spectrogram_reconstructed.png>]
-<3dap.png, id=397, 618.81187pt x 573.64313pt>
+<3dap.png, id=409, 618.81187pt x 573.64313pt>
 File: 3dap.png Graphic file (type png)
 <use 3dap.png>
-Package luatex.def Info: 3dap.png  used on input line 568.
-(luatex.def)             Requested size: 234.00238pt x 216.91878pt.
-<waveform_comparison.png, id=398, 1011.78pt x 867.24pt>
+Package luatex.def Info: 3dap.png  used on input line 567.
+(luatex.def)             Requested size: 253.49762pt x 234.99388pt.
+<waveform_comparison.png, id=410, 1011.78pt x 867.24pt>
 File: waveform_comparison.png Graphic file (type png)
 <use waveform_comparison.png>
-Package luatex.def Info: waveform_comparison.png  used on input line 575.
+Package luatex.def Info: waveform_comparison.png  used on input line 574.
 (luatex.def)             Requested size: 390.0pt x 334.29204pt.
 
 
 [16<./3dog.png><./3dap.png>]
 
 [17<./waveform_comparison.png>]
-<spectograma_eroare.jpeg, id=413, 1606.0pt x 803.0pt>
+<spectograma_eroare.jpeg, id=425, 1606.0pt x 803.0pt>
 File: spectograma_eroare.jpeg Graphic file (type jpg)
 <use spectograma_eroare.jpeg>
-Package luatex.def Info: spectograma_eroare.jpeg  used on input line 584.
+Package luatex.def Info: spectograma_eroare.jpeg  used on input line 583.
 (luatex.def)             Requested size: 390.0pt x 195.00294pt.
 
 
-[18<./spectograma_eroare.jpeg>] (./documentatie.aux)
+[18<./spectograma_eroare.jpeg>]
+<ui1.png, id=431, 223.58531pt x 207.77625pt>
+File: ui1.png Graphic file (type png)
+<use ui1.png>
+Package luatex.def Info: ui1.png  used on input line 598.
+(luatex.def)             Requested size: 155.99762pt x 144.96997pt.
+<ui2.png, id=432, 171.64125pt x 210.7875pt>
+File: ui2.png Graphic file (type png)
+<use ui2.png>
+Package luatex.def Info: ui2.png  used on input line 602.
+(luatex.def)             Requested size: 155.99762pt x 191.5757pt.
+<ui3.png, id=433, 186.6975pt x 233.37187pt>
+File: ui3.png Graphic file (type png)
+<use ui3.png>
+Package luatex.def Info: ui3.png  used on input line 606.
+(luatex.def)             Requested size: 155.99762pt x 195.00546pt.
+<ui4.png, id=434, 194.97844pt x 154.32657pt>
+File: ui4.png Graphic file (type png)
+<use ui4.png>
+Package luatex.def Info: ui4.png  used on input line 610.
+(luatex.def)             Requested size: 155.99762pt x 123.47789pt.
+
+
+[19<./ui1.png><./ui2.png><./ui3.png><./ui4.png>]
+
+[20]
+
+[21]
+<grafic1.png, id=518, 726.46407pt x 441.90094pt>
+File: grafic1.png Graphic file (type png)
+<use grafic1.png>
+Package luatex.def Info: grafic1.png  used on input line 730.
+(luatex.def)             Requested size: 390.0pt x 237.24066pt.
+<grafic2.png, id=519, 717.43031pt x 432.86719pt>
+File: grafic2.png Graphic file (type png)
+<use grafic2.png>
+Package luatex.def Info: grafic2.png  used on input line 734.
+(luatex.def)             Requested size: 390.0pt x 235.31679pt.
+
+
+[22]
+
+[23<./grafic1.png><./grafic2.png>]
+<grafic3.png, id=561, 696.35156pt x 429.85594pt>
+File: grafic3.png Graphic file (type png)
+<use grafic3.png>
+Package luatex.def Info: grafic3.png  used on input line 743.
+(luatex.def)             Requested size: 390.0pt x 240.74391pt.
+<grafic4.png, id=562, 701.62125pt x 433.62pt>
+File: grafic4.png Graphic file (type png)
+<use grafic4.png>
+Package luatex.def Info: grafic4.png  used on input line 747.
+(luatex.def)             Requested size: 390.0pt x 241.03247pt.
+
+
+[24<./grafic3.png><./grafic4.png>]
+<grafic5.png, id=570, 741.52031pt x 414.04688pt>
+File: grafic5.png Graphic file (type png)
+<use grafic5.png>
+Package luatex.def Info: grafic5.png  used on input line 756.
+(luatex.def)             Requested size: 253.49762pt x 141.54485pt.
+<grafic6.png, id=571, 475.02469pt x 352.31625pt>
+File: grafic6.png Graphic file (type png)
+<use grafic6.png>
+Package luatex.def Info: grafic6.png  used on input line 760.
+(luatex.def)             Requested size: 253.49762pt x 188.01694pt.
+<grafic7.png, id=572, 470.50781pt x 359.84438pt>
+File: grafic7.png Graphic file (type png)
+<use grafic7.png>
+Package luatex.def Info: grafic7.png  used on input line 764.
+(luatex.def)             Requested size: 253.49762pt x 193.8738pt.
+
+
+[25<./grafic5.png><./grafic6.png><./grafic7.png>]
+
+[26] (./documentatie.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2024-11-02>
@@ -1218,25 +1299,19 @@ L3 programming layer <2024-11-02>
 
 LaTeX Warning: There were multiply-defined labels.
 
-
-Package rerunfilecheck Warning: File `documentatie.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `documentatie.out':
-(rerunfilecheck)             Before: 261F932B999881BEB8405A7065E70D6A;2247
-(rerunfilecheck)             After:  33959E0A263619CA3A6FBEFEDCA7E5D0;2252.
+Package rerunfilecheck Info: File `documentatie.out' has not changed.
+(rerunfilecheck)             Checksum: 4B4DE9273C2A13F8DA58034D9A8987A1;2834.
 )
 
 Here is how much of LuaTeX's memory you used:
- 54192 strings out of 475630
- 381534,2373549 words of node,token memory allocated
+ 54555 strings out of 475630
+ 476926,2373549 words of node,token memory allocated
  662 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 41 attribute, 59 glue_spec
 , 41 attribute_list, 2 write nodes
-   avail lists: 1:1,2:4238,3:219,4:9228,5:8618,6:72,7:11817,8:69,9:21339,10:33,1
-1:770
- 75840 multiletter control sequences out of 65536+600000
+   avail lists: 1:1,2:4502,3:229,4:9916,5:9394,6:78,7:13013,8:69,9:23319,10:43,1
+1:861
+ 76066 multiletter control sequences out of 65536+600000
  61 fonts using 4256871 bytes
  98i,13n,102p,730b,962s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/users/matei/appdata/local/programs/miktex/fonts/opentype/public/lm/lmmono10-
@@ -1256,9 +1331,9 @@ nts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/matei/AppData/Local/Programs/MiK
 TeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/matei/AppData/Local/Prog
 rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/matei/AppData/Loc
 al/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on documentatie.pdf (18 pages, 3497124 bytes).
+Output written on documentatie.pdf (26 pages, 3845372 bytes).
 
-PDF statistics: 509 PDF objects out of 1000 (max. 8388607)
- 288 named destinations out of 1000 (max. 131072)
- 128 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 679 PDF objects out of 1000 (max. 8388607)
+ 398 named destinations out of 1000 (max. 131072)
+ 152 words of extra memory for PDF output out of 10000 (max. 100000000)
 

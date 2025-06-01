@@ -17,6 +17,7 @@
 %\usepackage{hyperref}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{subcaption}
 
 
 \definecolor{bg}{rgb}{0.1,0.1,0.1}
@@ -70,8 +71,8 @@
 
 \author{
   Popa Mircea Alexandru \\
-  Sîrghe Matei Ștefan \\ 
-  Ungureanu Robert Afton
+  Sîrghe Matei-Ștefan \\ 
+  Ungureanu Robert Anton
 }
 
 \maketitle
@@ -554,18 +555,16 @@ Am ales ca exemplu melodia \href{https://www.youtube.com/watch?v=fJ9rUzIMcZQ&ab_
     \includegraphics[width=0.9\textwidth]{spectrogram_reconstructed.png}
 \end{figure}
 
-\subsection{Spectograma originală 3D}
+\subsection{Spectograma originală și cea aproximată 3D}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.6\textwidth]{3dog.png}
+    \includegraphics[width=0.65\textwidth]{3dog.png}
 \end{figure}
 
-\subsection{Spectograma aproximată 3D}
-
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.6\textwidth]{3dap.png}
+    \includegraphics[width=0.65\textwidth]{3dap.png}
 \end{figure}
 
 \subsection{Grafice erori}
@@ -584,6 +583,190 @@ Am ales ca exemplu melodia \href{https://www.youtube.com/watch?v=fJ9rUzIMcZQ&ab_
     \includegraphics[width=1\textwidth]{spectograma_eroare.jpeg}
 \end{figure}
 
+\newpage
+
+\section{Bonus Metodă interpolare}
+
+\subsection{Introducere}
+
+Avem și o abordare mai naivă care are eroarea mai mare dar care poate să micșoreze mărimea fișierului original semnificativ, salvând datele într-un fișier binar.
+Acesta este UI-ul pentru această abordare:
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\linewidth]{ui1.png}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\linewidth]{ui2.png}
+	\end{subfigure}
+	\vskip\baselineskip
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\linewidth]{ui3.png}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.4\textwidth}
+		\includegraphics[width=\linewidth]{ui4.png}
+	\end{subfigure}
+\end{figure}
+
+\subsection{Explicații cod și UI}
+
+Înafară de codul deja prezentat, sunt folosite în varianta fără SVD următorele funcții:
+
+Spline cubic care e folosit pentru a aproxima funcția care este obținută după Transformata Fourier:
+
+\begin{lstlisting}
+    def spline_cubic(X, Y, x):
+    length_x = len(X)
+    h = X[1:] - X[:-1] 
+
+    #rezolvare sistem de derivate de ord 2
+    A = np.zeros((length_x,length_x))
+    vect_b = np.zeros(length_x)
+
+    A[0,0]=1
+    A[-1,-1]=1
+
+    for i in range(1, length_x - 1):
+        A[i, i -1] = h[i-1]
+        A[i,i] = 2 * (h[i-1] + h[i])
+        A[i, i+1] = h[i]
+        vect_b[i] = 6 * ((Y[i+1] - Y[i]) / h[i] - (Y[i] - Y[i-1]) / h[i-1])
+    
+    M = np.linalg.solve(A, vect_b) #TO DO: REZOLVARE CA LA LAB!!!!!
+
+    y_eval = np.zeros_like(x)
+
+    idx = np.searchsorted(X, x) - 1 # tot indexing optimizat
+    idx = np.clip(idx, 0, length_x - 2)
+
+    x0 = X[idx]
+    x1 = X[idx + 1]
+    y0 = Y[idx]
+    y1 = Y[idx + 1]
+    h_i = x1 - x0
+    M0 = M[idx]
+    M1 = M[idx + 1]
+
+    dx = x - x0
+    dx1 = x1 - x
+
+    term1 = M0 * dx1**3 / (6 * h_i)
+    term2 = M1 * dx**3 / (6 * h_i)
+    term3 = (y0 - M0 * h_i**2 / 6) * dx1 / h_i
+    term4 = (y1 - M1 * h_i**2 / 6) * dx / h_i
+
+    y_eval = term1 + term2 + term3 + term4
+    return y_eval
+\end{lstlisting}
+
+Spline Pătratic care e folosit pentru a aproxima funcția care este obținută după Transformata Fourier:
+
+\begin{lstlisting}
+def spline_patratic(X, Y, x_eval):    
+    n = len(X) - 1
+    h = X[1:] - X[:-1]
+    
+    c = Y[:-1]
+    
+    A = np.zeros((2*n, 2*n))
+    d = np.zeros(2*n)
+    
+    for i in range(n):
+        A[i, i] = h[i]**2      
+        A[i, n + i] = h[i]      
+        d[i] = Y[i+1] - c[i]    
+    
+    for i in range(n - 1):
+        A[n + i, i] = 2 * h[i]      
+        A[n + i, n + i] = 1          
+        A[n + i, n + i + 1] = -1     
+        d[n + i] = 0
+    
+    A[-1, 0] = 1
+    d[-1] = 0
+    
+    coeffs = np.linalg.solve(A, d)
+    
+    a = coeffs[:n]
+    b = coeffs[n:]
+    
+    y_eval = np.zeros_like(x_eval, dtype=float)
+    
+    idx = np.searchsorted(X, x_eval, side='right') - 1
+    idx = np.clip(idx, 0, n - 1)
+    
+    dx = x_eval - X[idx]
+    
+    y_eval = a[idx] * dx**2 + b[idx] * dx + c[idx]
+    
+    if y_eval.size == 1:
+        return y_eval.item()
+    return y_eval
+\end{lstlisting}
+
+Spline Liniar care e folosit pentru a aproxima funcția care este obținută după Transformata Fourier:
+
+\begin{lstlisting}
+def spline_liniar(X, Y, x):
+    y_val = np.zeros_like(x)
+    indices = np.searchsorted(X, x, side='right') - 1
+    indices = np.clip(indices, 0, len(X) - 2)
+    x0, x1 = X[indices], X[indices+1]  # coefficients
+    y0, y1 = Y[indices], Y[indices+1]
+    
+    y_val = y0 + (y1 - y0) / (x1 - x0) * (x - x0)
+
+    return y_val
+\end{lstlisting}
+
+\subsection{Grafic interpolare și eroare}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{1\textwidth}
+		\includegraphics[width=\linewidth]{grafic1.png}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{1\textwidth}
+		\includegraphics[width=\linewidth]{grafic2.png}
+	\end{subfigure}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{1\textwidth}
+		\includegraphics[width=\linewidth]{grafic3.png}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{1\textwidth}
+		\includegraphics[width=\linewidth]{grafic4.png}
+	\end{subfigure}
+\end{figure}
+
+\newpage
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.65\textwidth}
+		\includegraphics[width=\linewidth]{grafic5.png}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.65\textwidth}
+		\includegraphics[width=\linewidth]{grafic6.png}
+	\end{subfigure}
+	\vskip\baselineskip
+	\begin{subfigure}[b]{0.65\textwidth}
+		\includegraphics[width=\linewidth]{grafic7.png}
+	\end{subfigure}
+\end{figure}
+
+\newpage
+
 \section{Bibliografia}
 
 \begin{itemize}
@@ -596,7 +779,7 @@ Am ales ca exemplu melodia \href{https://www.youtube.com/watch?v=fJ9rUzIMcZQ&ab_
     \item \href{https://en.wikipedia.org/wiki/Short-time_Fourier_transform}{STFT - Wikipedia}
     \item \href{https://en.wikipedia.org/wiki/Window_function#Hann_and_Hamming_windows}{Hann and Hamming Windows}
     \item \href{https://en.wikipedia.org/wiki/Uncertainty_principle}{Uncertainty principle}
-    \item Ce a fost dezvăluit lui Robert cât timp visa
+    \item Ce a fost dezvăluit lui Robert într-un vis
 \end{itemize}
 
 \end{document}

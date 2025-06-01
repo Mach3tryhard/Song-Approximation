@@ -12,7 +12,7 @@ import STFT  #Importam functiile de STFT si IFFT din STFT.py
 import MATRICI
 
 # Configs
-file_path = './samples/1sec_sample.wav' #Reprezinta fisierul procesat
+file_path = './samples/queen.wav' #Reprezinta fisierul procesat
 output_path_name = 'reconstructed_sample.wav'
 nr_valori_singulare = -1 # -1 pt calcul automat de k
 use_griffin_lim = False  # Daca e true, nu vom folosi phase-ul original ci il vom aproxima cu algoritmul Griffin Lim
