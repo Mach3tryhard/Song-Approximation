@@ -14,6 +14,8 @@ from scipy.interpolate import make_interp_spline
 
 # file format:
 # 1 byte - 0=mono, 1=stereo
+# 4 bytes - initial number of data points
+# 4 bytes - maximum value for rescaling 
 # 1 byte - size of data type
 # 4 bytes - sampling rate
 # 2 bytes - samples per frame
@@ -180,6 +182,16 @@ def Reconstruct_single_frequency(time, f, indexes, amps, samples_per_frame, fram
                 else:
                     wave[j] = wave[j - (j - frame_x_idx[-2]) * 2]
 
+        if np.max(wave) > 50 and i == 25 and f == plot_freq and plot_singular == True:
+            plt.figure(figsize=(10,6))
+            plt.plot(time_axis_frame, wave, label = "Inainte de window")
+            plt.scatter(frame_x, frame_y, s=50, label = "Puncte interpoalre")
+            plt.title(f"Frecventa: {f} Hz la frame-ul {i}")
+            plt.xlabel("Timp (s)")
+            plt.ylabel("Amplitudine")
+            plt.legend(loc = 'upper right')
+            plt.show()
+
         if start_sample < 0:
             wave = np.zeros(samples_per_frame + start_sample)
             wave_component[:end_sample]+=wave
@@ -187,15 +199,23 @@ def Reconstruct_single_frequency(time, f, indexes, amps, samples_per_frame, fram
             wave[:available] *= window[:available]
             wave_component[start_sample:end_sample]+=wave[:available]
 
-        if np.max(wave) > 50 and i == 10 and f == plot_freq and plot_singular == True:
+        if np.max(wave) > 50 and i == 25 and f == plot_freq and plot_singular == True:
             plt.figure(figsize=(10,6))
-            plt.plot(time_axis_frame, wave)
-            plt.scatter(frame_x, frame_y, s=50)
+            plt.plot(time_axis_frame, wave, label = "Dupa window")
+            plt.scatter(frame_x, frame_y, s=50, label = "Puncte interpoalre")
+            plt.title(f"Frecventa: {f} Hz la frame-ul {i}")
+            plt.xlabel("Timp (s)")
+            plt.ylabel("Amplitudine")
+            plt.legend(loc = 'upper right')
             plt.show()
         
     if f == plot_freq and plot_entire == True:
         plt.figure(figsize=(10,6))
-        plt.plot(time[:end_sample], wave_component[:end_sample])
+        plt.plot(time[:end_sample], wave_component[:end_sample], label = "Waveform")
+        plt.title(f"Grafic pentru Frecventa: {f} Hz")
+        plt.xlabel("Timp (s)")
+        plt.ylabel("Amplitudine")
+        plt.legend(loc = 'upper right')
         plt.show()
 
     return wave_component

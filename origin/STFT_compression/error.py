@@ -50,9 +50,9 @@ def error_calc(input1, input2):
         err = np.abs(left_original - left_decompressed)
 
         plt.title('Error')
+        plt.ylabel("Amplitudine")
         plt.xlabel("Time [S]")
-        plt.xlabel("Time [S]")
-        plt.plot(time_original, err, 'g', linewidth=0.7)
+        plt.plot(time_original, err, 'g', linewidth=0.1)
         plt.legend(loc = 'upper right')
 
         plt.tight_layout()

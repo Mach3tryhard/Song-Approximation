@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.signal import stft
 from scipy.io import wavfile
 import struct
@@ -8,6 +7,7 @@ import concurrent.futures
 # file format:
 # 1 byte - 0=mono, 1=stereo
 # 4 bytes - initial number of data points
+# 4 bytes - maximum value for rescaling 
 # 1 byte - size of data type
 # 4 bytes - sampling rate
 # 2 bytes - samples per frame

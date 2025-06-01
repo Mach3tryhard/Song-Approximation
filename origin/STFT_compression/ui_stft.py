@@ -159,7 +159,7 @@ class DecompressionMenu:
 
         # Metoda selection
         tk.Label(self.window, text="Metoda:").grid(row=2, column=0, sticky="e", padx=5, pady=5)
-        self.metoda_var = tk.StringVar(value="np_spline")
+        self.metoda_var = tk.StringVar(value="spline3")
         self.dropdown = tk.OptionMenu(self.window, self.metoda_var, "spline1", "spline2", "spline3", "np_spline", command=self.toggle_k_input)
         self.dropdown.grid(row=2, column=1, sticky="w")
 
