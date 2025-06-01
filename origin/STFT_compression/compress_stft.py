@@ -151,19 +151,8 @@ def single_frequency(times, sr, samples_per_frame, data_count, data_type, freque
             idx_out[frame_idx] = min(min_idx[frame_idx], max_idx[frame_idx])
             val_out[frame_idx] = wave[idx_out[frame_idx]]
 
-            # plt.figure(figsize=(10,6))
-            # plt.plot(time_axis_frame, wave, color='red', label='Mono', linewidth=0.5)
-            # plt.scatter(time_axis_frame[np.argmin(wave)], min_y[frame_idx], s=50)
-            # jump=sr//int(2*f)
-            # plt.scatter(time_axis_frame[np.argmin(wave)-jump], max_y[frame_idx], s=50)
-            # plt.show()
-
             wave[:available] *= window[:available]
             component[start_sample:end_sample]+=wave[:available]
-
-            # plt.figure(figsize=(10,6))
-            # plt.plot(time[:end_sample], component[:end_sample])
-            # plt.show()
         
         return f, idx_out, val_out, component
 
