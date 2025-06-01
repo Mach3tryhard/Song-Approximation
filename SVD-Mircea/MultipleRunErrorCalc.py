@@ -1,6 +1,7 @@
 import numpy as np
 import librosa
 from scipy.io import wavfile
+from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 import librosa.display
 from tqdm import tqdm
@@ -20,6 +21,59 @@ use_librosa_transforms = True #La fel ca la svd, ori rulam functiile noastre ori
 #read_binary = True // nu e worth, aparent scrii mai mult decat fisierul original
 
 #Pt un cod rulabil a nu se utiliza simultan si functiile proprii fourier si svd, timpul de procesare este prea mare
+
+
+def run_multiple_k_values(k_values):
+    max_errors = []
+    
+    for k in k_values:
+        print(f"Nr. valori singulare k = {k}...")
+        global nr_valori_singulare
+        nr_valori_singulare = k
+        
+        audio_output, sr = process_audio()
+        
+        sr_orig, original_data = wavfile.read(file_path)
+        if original_data.dtype == np.int16:
+            original_data = original_data.astype(np.float32) / 32768.0
+        elif original_data.dtype == np.int32:
+            original_data = original_data.astype(np.float32) / 2147483648.0
+        elif original_data.dtype == np.float32:
+            pass
+        else:
+            raise ValueError(f"Unsupported data type: {original_data.dtype}")
+
+        if original_data.ndim > 1:
+            original_data = np.mean(original_data, axis=1)
+
+        error_metrics = calculate_error_metrics(original_data, audio_output, "Mono")
+        max_errors.append(error_metrics['max_error'])
+    
+    return max_errors
+
+def log_func(x, a, b):
+    return a * np.log(x) + b
+
+def plot_error_vs_k(k_values, max_errors):
+    k_values_desc = k_values[::-1]
+    max_errors_desc = max_errors[::-1]
+
+    params, y = curve_fit(log_func, k_values_desc, max_errors_desc)
+    regression_line = log_func(k_values_desc, *params)
+
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(k_values_desc, max_errors_desc, marker='o', linestyle='-', color='g', label='Eroare maxima')
+    plt.plot(k_values_desc, regression_line, color='r', linestyle='--',label='Regresie Logaritmica')
+    plt.xlabel('Nr. val. sg. (k)')
+    plt.ylabel('Eroarea Maxima')
+    plt.title('Eroarea maxima VS Nr. de valori singulare')
+    plt.legend()
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.tight_layout()
+    plt.savefig("error_vs_k.png", dpi=150)
+    plt.show()
+
 
 def my_fft_recursiv(x):
     #Algoritmul Cooley-Tukey recursiv, Radix-2
@@ -430,37 +484,7 @@ def process_audio():
 
 
 if __name__ == "__main__":
-    audio_output, sr = process_audio()
-
+    k_values = np.arange(5, 506, 10)
     
-    wavfile.write(output_path_name, sr, (audio_output * 32767).astype(np.int16))
-    print(f"Processing complete. Output saved as {output_path_name}")
-
-
-    sr_orig, original_data = wavfile.read(file_path)
-    if original_data.dtype == np.int16:
-        original_data = original_data.astype(np.float32) / 32768.0
-    elif original_data.dtype == np.int32:
-        original_data = original_data.astype(np.float32) / 2147483648.0
-    elif original_data.dtype == np.float32:
-        pass
-    else:
-        raise ValueError(f"Unsupported data type: {original_data.dtype}")
-
-    if original_data.ndim > 1:
-        original_data = np.mean(original_data, axis=1)
-
-    #aici nu voi folosi functiile proprii, e doar pt plotting
-    stft_orig = librosa.stft(original_data)
-    stft_recon = librosa.stft(audio_output)
-    mag_orig = np.abs(stft_orig)
-    mag_recon = np.abs(stft_recon)
-
-    print("\nGenerare imagini...")
-
-    plot_spectrogram(mag_orig, sr, "Original Spectrogram", "spectrogram_original.png")
-    plot_spectrogram(mag_recon, sr, "Reconstructed Spectrogram", "spectrogram_reconstructed.png")
-    plot_waveform_comparison(original_data, audio_output, sr, "Mono", "waveform_comparison.png")
-    calculate_error_metrics(original_data, audio_output, "Mono")
-
-    print("\nProcesat :D")
+    max_errors = run_multiple_k_values(k_values)
+    plot_error_vs_k(k_values, max_errors)
