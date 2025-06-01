@@ -2,10 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import wavfile
 
-def error_calc(input):
-    input = 'chords_mono'
-    file_original = input + '.wav'
-    file_decompressed = input + '_decompressed.wav'
+def error_calc(input1, input2):
+    file_original = input1
+    file_decompressed = input2
 
     sr_original, data_original = wavfile.read(file_original)
     sr_decompressed, data_decompressed = wavfile.read(file_decompressed)

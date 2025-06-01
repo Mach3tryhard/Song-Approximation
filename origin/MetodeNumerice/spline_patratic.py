@@ -1,26 +1,42 @@
 import numpy as np
 
-def spline_patratic(X, Y, x):
-    nr_int = len(X) - 1
-    a = np.zeros(nr_int)
-    b = np.zeros(nr_int)
-    c = Y[:-1] 
-
-    h = X[1:] - X[:-1] 
-
-    b[0] = (Y[1] - Y[0]) / h[0] # primu slope initial
-    a[0] = 0 #prima derivata egal 0
-
-    for i in range(1, nr_int):
-        b[i] = 2*(Y[i+1] - Y[i])/h[i] - b[i-1]
-        a[i] = (Y[i+1] - Y[i] - b[i]*h[i]) / (h[i]**2)
+def spline_patratic(X, Y, x_eval):    
+    n = len(X) - 1
+    h = X[1:] - X[:-1]
     
-    y_eval = np.zeros_like(x)
-
-    idx = np.searchsorted(X, x) -1 # idx e indexul intervalului lui x curent
-    idx = np.clip(idx, 0, nr_int - 1)
-
-    dx = x - X[idx]
-    y_eval = a[idx] * dx ** 2 + b[idx] * dx + c[idx]
-
+    c = Y[:-1]
+    
+    A = np.zeros((2*n, 2*n))
+    d = np.zeros(2*n)
+    
+    for i in range(n):
+        A[i, i] = h[i]**2      
+        A[i, n + i] = h[i]      
+        d[i] = Y[i+1] - c[i]    
+    
+    for i in range(n - 1):
+        A[n + i, i] = 2 * h[i]      
+        A[n + i, n + i] = 1          
+        A[n + i, n + i + 1] = -1     
+        d[n + i] = 0
+    
+    A[-1, 0] = 1
+    d[-1] = 0
+    
+    coeffs = np.linalg.solve(A, d)
+    
+    a = coeffs[:n]
+    b = coeffs[n:]
+    
+    y_eval = np.zeros_like(x_eval, dtype=float)
+    
+    idx = np.searchsorted(X, x_eval, side='right') - 1
+    idx = np.clip(idx, 0, n - 1)
+    
+    dx = x_eval - X[idx]
+    
+    y_eval = a[idx] * dx**2 + b[idx] * dx + c[idx]
+    
+    if y_eval.size == 1:
+        return y_eval.item()
     return y_eval
