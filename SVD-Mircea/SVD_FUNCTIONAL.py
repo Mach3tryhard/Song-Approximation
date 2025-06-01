@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import librosa.display
 from tqdm import tqdm
 from joblib import Parallel, delayed  #Bandaj pt faptul ca nu putem reinveta roata :(
+from mpl_toolkits.mplot3d import Axes3D
 import os
 
 
@@ -170,7 +171,27 @@ def plot_waveform_comparison(original, reconstructed, sr, channel_name, filename
         plt.show()
     plt.close()
 
+def plot_3d_spectrogram(magnitude, sr, title, filename=None):
+    time = np.linspace(0, magnitude.shape[1] / sr, magnitude.shape[1])
+    freq = np.linspace(0, sr / 2, magnitude.shape[0])
+    time_grid, freq_grid = np.meshgrid(time, freq)
 
+    db_spec = librosa.amplitude_to_db(magnitude, ref=np.max)
+
+    fig = plt.figure(figsize=(12, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_surface(time_grid, freq_grid, db_spec, cmap='viridis', edgecolor='none')
+
+    ax.set_xlabel('Time (s)')
+    ax.set_ylabel('Frequency (Hz)')
+    ax.set_zlabel('Amplitude (dB)')
+    ax.set_title(title)
+
+    if filename:
+        plt.savefig(filename, dpi=150)
+    else:
+        plt.show()
+    plt.close()
 
 def reconstruct_audio(magnitude, phase, sr):
     stft_reconstructed = magnitude * np.exp(1j * phase)
@@ -462,5 +483,9 @@ if __name__ == "__main__":
     plot_spectrogram(mag_recon, sr, "Reconstructed Spectrogram", "spectrogram_reconstructed.png")
     plot_waveform_comparison(original_data, audio_output, sr, "Mono", "waveform_comparison.png")
     calculate_error_metrics(original_data, audio_output, "Mono")
+
+    # plot_3d_spectrogram(mag_orig, sr, "Original Audio Spectrogram", "3d_spectrogram_original.png")
+    # plot_3d_spectrogram(mag_recon, sr, "Reconstructed Audio Spectrogram", "3d_spectrogram_reconstructed.png")
+    
 
     print("\nProcesat :D")
