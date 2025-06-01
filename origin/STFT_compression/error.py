@@ -52,7 +52,7 @@ def error_calc(input1, input2):
         plt.title('Error')
         plt.ylabel("Amplitudine")
         plt.xlabel("Time [S]")
-        plt.plot(time_original, err, 'g', linewidth=0.1)
+        plt.plot(time_original, err, 'g', linewidth=0.1 ,label = "Error over time")
         plt.legend(loc = 'upper right')
 
         plt.tight_layout()
@@ -77,7 +77,7 @@ def error_calc(input1, input2):
         plt.title('Error Left')
         plt.xlabel("Time [S]")
         plt.xlabel("Time [S]")
-        plt.plot(time_original, err_left, 'g--', linewidth=0.1)
+        plt.plot(time_original, err_left, 'g--', linewidth=0.1 ,label = "Error over time")
         plt.legend(loc = 'upper right')
 
         plt.tight_layout()
@@ -102,7 +102,7 @@ def error_calc(input1, input2):
         plt.title('Error Right')
         plt.xlabel("Time [S]")
         plt.xlabel("Time [S]")
-        plt.plot(time_original, err_right, 'g--', linewidth=0.1)
+        plt.plot(time_original, err_right, 'g--', linewidth=0.1 ,label = "Error over time")
         plt.legend(loc = 'upper right')
 
         plt.tight_layout()
