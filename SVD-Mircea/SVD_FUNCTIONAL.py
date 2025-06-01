@@ -9,12 +9,12 @@ import os
 
 
 # Configs
-file_path = 'song_chopped.wav'
+file_path = '1sec_sample.wav'
 output_path_name = 'reconstructed_sample.wav'
 nr_valori_singulare = -1 # -1 pt calcul automat de k
 use_griffin_lim = False  # Daca e true, nu vom folosi phase-ul original ci il vom aproxima cu algoritmul Griffin Lim
 griffin_lim_iterations = 50  
-use_numpy_svd = True #Self-explanatory.
+use_numpy_svd = False #Self-explanatory.
 use_librosa_transforms = True #La fel ca la svd, ori rulam functiile noastre ori functiile librosa
 #write_binary = True #scrie matriciile SVD intr-un fisier binar
 #read_binary = True // nu e worth, aparent scrii mai mult decat fisierul original
@@ -247,7 +247,7 @@ def griffin_lim(magnitude, n_iter=50, window='hann', n_fft=2048, hop_length=None
         audio = my_istft(stft)
     return audio
 
-def Gram_Schmidt(A):
+def Gram_Schmidt(A):#   Nu mai este folosit in cod
     #A se va ortogonaliza folosind Gram_Schmidt
     m, n = A.shape
     Q = np.zeros((m, n), dtype=np.float32)
@@ -282,7 +282,7 @@ def Factorizare_QR(A):
     
     return Q, R
 
-def eigen_decomp(A):
+def eigen_decomp(A, max_iter=1000, tolerance=1e-8):
     #Descompunere in vectori si valori proprii folosind Factorizare QR, realizata in paralel cu libraria joblib
     B = A.T @ A
     n = B.shape[0]
@@ -301,13 +301,66 @@ def eigen_decomp(A):
     eigenvectors = V
     return eigenvalues, eigenvectors
 
+def optimised_QR(A):
+    n = A.shape[1]
+    Q = A.copy().astype(np.float32)
+    R = np.zeros((n, n), dtype=np.float32)
+
+    for i in range(n):
+        norm = np.linalg.norm(Q[:, i])
+        if norm < 1e-10: #evitam vectori cu zero
+            R[i, i] = 0.0
+            continue
+        
+        R[i, i] = norm
+        Q[:, i] /= R[i, i]
+
+        #Optimizare prin vectorizarea operatiilor, should be a lil better
+        if i < n - 1:
+            R[i, i+1:n] = Q[:, i] @ Q[:, i+1:n] #Produs scalar simultan pt j > i
+            Q[:, i+1:n] -= np.outer(Q[:, i], R[i, i+1:n]) #Produsul exterior tot intr-o singura operatie
+
+    return Q, R
+
+def eigen_decomp_optimised(A, max_iter=1000, tolerance=1e-8):
+    B = A.T @ A
+    n = B.shape[0]
+    V = np.eye(n, dtype=np.float32)
+
+    pbar = tqdm(total=max_iter, desc="Eigen Decomp")
+
+    for i in range(max_iter):
+        Q, R = optimised_QR(B)
+        B = R @ Q
+        V = V @ Q
+
+        off_diag = np.abs(B - np.diag(np.diag(B))) #Pt convergenta
+        max_off = np.max(off_diag)
+
+        pbar.update(1)
+        
+        if max_off < tolerance: 
+            pbar.set_description(f"Converged la {i+1} iteratii")
+            break
+    
+    pbar.close()
+    eigenvalues = np.diag(B)
+    eigenvectors = V
+    return eigenvalues, eigenvectors
+
+
 def solve_SVD(spect, k=100):
     #Cod neoptimizat de SVD. Foarte incet
     def compute_eigenvectors():
-        lamda, v = eigen_decomp(spect)
+        #lamda, v = eigen_decomp(spect)
+        lamda, v = eigen_decomp_optimised(spect)
         return lamda, v
     
     lamda, v = compute_eigenvectors()
+    idx = np.argsort(-lamda)
+    lamda = lamda[idx]
+    v = v[:, idx] #sortam descrescator
+
     singular_values = np.sqrt(np.maximum(lamda, 0))
     
     # Daca k nu e specificat vom calcula automat pe baza "energiei", adica suma a elementelor matricei cu valori singulare (sigma) la puterea a doua.
