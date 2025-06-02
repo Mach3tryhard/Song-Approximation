@@ -100,7 +100,7 @@ def Rewrite(file_out, left, right, sr):
         stereo_data = np.stack((left, right), axis=-1)
         wavfile.write(file_out, sr, stereo_data)
 
-def single_frequency(times, sr, samples_per_frame, data_count, data_type, frequencies, time_axis_frame, Zxx, freq_idx, window, noise_threshold):
+def single_frequency(file_out_direct, times, sr, samples_per_frame, data_count, data_type, frequencies, time_axis_frame, Zxx, freq_idx, window, noise_threshold):
 
     min_idx = np.zeros(len(times))
 
