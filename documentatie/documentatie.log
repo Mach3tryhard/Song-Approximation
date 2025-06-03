@@ -1,9 +1,9 @@
-This is LuaHBTeX, Version 1.18.1 (MiKTeX 24.4) (format=lualatex 2025.1.10)  1 JUN 2025 23:51
+This is LuaHBTeX, Version 1.18.1 (MiKTeX 24.4) (format=lualatex 2025.1.15)  3 JUN 2025 13:33
  restricted system commands enabled.
 **./documentatie.tex
 (./documentatie.tex
 LaTeX2e <2024-11-01> patch level 1
-L3 programming layer <2024-11-02>
+L3 programming layer <2024-12-25>
 Lua module: luaotfload 2024-02-14 v3.28 Lua based OpenType font support
 Lua module: lualibs 2023-07-13 v2.76 ConTeXt Lua standard libraries.
 Lua module: lualibs-extended 2023-07-13 v2.76 ConTeXt Lua libraries -- extended 
@@ -312,7 +312,7 @@ File: luatex.def 2024/04/13 v1.2e Graphics/color driver for luatex
 \Gin@req@width=\dimen155
 )
 (C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/latex/titlesec/titlesec.sty
-Package: titlesec 2023/10/27 v2.16 Sectioning titles
+Package: titlesec 2025/01/04 v2.17 Sectioning titles
 \ttl@box=\box54
 \beforetitleunit=\skip55
 \aftertitleunit=\skip56
@@ -700,8 +700,8 @@ Package: titling 2009/09/04 v2.1d maketitle typesetting
 )
 (C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/latex/circuitikz/circuitikz.s
 ty
-Package: circuitikz 2024/08/03{} The CircuiTikz circuit drawing package version
- 1.7.0
+Package: circuitikz 2025/01/10{} The CircuiTikz circuit drawing package version
+ 1.7.1
 
 (C:/Users/matei/AppData/Local/Programs/MiKTeX/tex/generic/pgf/frontendlayer/tik
 z/libraries/tikzlibrarycalc.code.tex
@@ -1174,18 +1174,18 @@ Overfull \hbox (6.20024pt too wide) in paragraph at lines 500--501
 [13]
 
 [14]
-<spectrogram_original.png, id=397, 867.24pt x 433.62pt>
+<spectrogram_original.png, id=373, 867.24pt x 433.62pt>
 File: spectrogram_original.png Graphic file (type png)
 <use spectrogram_original.png>
 Package luatex.def Info: spectrogram_original.png  used on input line 548.
 (luatex.def)             Requested size: 350.99762pt x 175.50266pt.
-<spectrogram_reconstructed.png, id=398, 867.24pt x 433.62pt>
+<spectrogram_reconstructed.png, id=374, 867.24pt x 433.62pt>
 File: spectrogram_reconstructed.png Graphic file (type png)
 <use spectrogram_reconstructed.png>
 Package luatex.def Info: spectrogram_reconstructed.png  used on input line 555.
 
 (luatex.def)             Requested size: 350.99762pt x 175.50266pt.
-<3dog.png, id=399, 669.2503pt x 590.95781pt>
+<3dog.png, id=375, 669.2503pt x 590.95781pt>
 File: 3dog.png Graphic file (type png)
 <use 3dog.png>
 Package luatex.def Info: 3dog.png  used on input line 562.
@@ -1193,12 +1193,12 @@ Package luatex.def Info: 3dog.png  used on input line 562.
 
 
 [15<./spectrogram_original.png><./spectrogram_reconstructed.png>]
-<3dap.png, id=409, 618.81187pt x 573.64313pt>
+<3dap.png, id=385, 618.81187pt x 573.64313pt>
 File: 3dap.png Graphic file (type png)
 <use 3dap.png>
 Package luatex.def Info: 3dap.png  used on input line 567.
 (luatex.def)             Requested size: 253.49762pt x 234.99388pt.
-<waveform_comparison.png, id=410, 1011.78pt x 867.24pt>
+<waveform_comparison.png, id=386, 1011.78pt x 867.24pt>
 File: waveform_comparison.png Graphic file (type png)
 <use waveform_comparison.png>
 Package luatex.def Info: waveform_comparison.png  used on input line 574.
@@ -1208,33 +1208,38 @@ Package luatex.def Info: waveform_comparison.png  used on input line 574.
 [16<./3dog.png><./3dap.png>]
 
 [17<./waveform_comparison.png>]
-<spectograma_eroare.jpeg, id=425, 1606.0pt x 803.0pt>
+<spectograma_eroare.jpeg, id=401, 1606.0pt x 803.0pt>
 File: spectograma_eroare.jpeg Graphic file (type jpg)
 <use spectograma_eroare.jpeg>
 Package luatex.def Info: spectograma_eroare.jpeg  used on input line 583.
 (luatex.def)             Requested size: 390.0pt x 195.00294pt.
+<EROARE.jpeg, id=402, 1003.75pt x 602.25pt>
+File: EROARE.jpeg Graphic file (type jpg)
+<use EROARE.jpeg>
+Package luatex.def Info: EROARE.jpeg  used on input line 588.
+(luatex.def)             Requested size: 390.0pt x 234.00354pt.
 
 
-[18<./spectograma_eroare.jpeg>]
-<ui1.png, id=431, 223.58531pt x 207.77625pt>
+[18<./spectograma_eroare.jpeg><./EROARE.jpeg>]
+<ui1.png, id=410, 223.58531pt x 207.77625pt>
 File: ui1.png Graphic file (type png)
 <use ui1.png>
-Package luatex.def Info: ui1.png  used on input line 598.
+Package luatex.def Info: ui1.png  used on input line 603.
 (luatex.def)             Requested size: 155.99762pt x 144.96997pt.
-<ui2.png, id=432, 171.64125pt x 210.7875pt>
+<ui2.png, id=411, 171.64125pt x 210.7875pt>
 File: ui2.png Graphic file (type png)
 <use ui2.png>
-Package luatex.def Info: ui2.png  used on input line 602.
+Package luatex.def Info: ui2.png  used on input line 607.
 (luatex.def)             Requested size: 155.99762pt x 191.5757pt.
-<ui3.png, id=433, 186.6975pt x 233.37187pt>
+<ui3.png, id=412, 186.6975pt x 233.37187pt>
 File: ui3.png Graphic file (type png)
 <use ui3.png>
-Package luatex.def Info: ui3.png  used on input line 606.
+Package luatex.def Info: ui3.png  used on input line 611.
 (luatex.def)             Requested size: 155.99762pt x 195.00546pt.
-<ui4.png, id=434, 194.97844pt x 154.32657pt>
+<ui4.png, id=413, 194.97844pt x 154.32657pt>
 File: ui4.png Graphic file (type png)
 <use ui4.png>
-Package luatex.def Info: ui4.png  used on input line 610.
+Package luatex.def Info: ui4.png  used on input line 615.
 (luatex.def)             Requested size: 155.99762pt x 123.47789pt.
 
 
@@ -1243,48 +1248,48 @@ Package luatex.def Info: ui4.png  used on input line 610.
 [20]
 
 [21]
-<grafic1.png, id=518, 726.46407pt x 441.90094pt>
+<grafic1.png, id=500, 726.46407pt x 441.90094pt>
 File: grafic1.png Graphic file (type png)
 <use grafic1.png>
-Package luatex.def Info: grafic1.png  used on input line 730.
+Package luatex.def Info: grafic1.png  used on input line 735.
 (luatex.def)             Requested size: 390.0pt x 237.24066pt.
-<grafic2.png, id=519, 717.43031pt x 432.86719pt>
+<grafic2.png, id=501, 717.43031pt x 432.86719pt>
 File: grafic2.png Graphic file (type png)
 <use grafic2.png>
-Package luatex.def Info: grafic2.png  used on input line 734.
+Package luatex.def Info: grafic2.png  used on input line 739.
 (luatex.def)             Requested size: 390.0pt x 235.31679pt.
 
 
 [22]
 
 [23<./grafic1.png><./grafic2.png>]
-<grafic3.png, id=561, 696.35156pt x 429.85594pt>
+<grafic3.png, id=544, 696.35156pt x 429.85594pt>
 File: grafic3.png Graphic file (type png)
 <use grafic3.png>
-Package luatex.def Info: grafic3.png  used on input line 743.
+Package luatex.def Info: grafic3.png  used on input line 748.
 (luatex.def)             Requested size: 390.0pt x 240.74391pt.
-<grafic4.png, id=562, 701.62125pt x 433.62pt>
+<grafic4.png, id=545, 701.62125pt x 433.62pt>
 File: grafic4.png Graphic file (type png)
 <use grafic4.png>
-Package luatex.def Info: grafic4.png  used on input line 747.
+Package luatex.def Info: grafic4.png  used on input line 752.
 (luatex.def)             Requested size: 390.0pt x 241.03247pt.
 
 
 [24<./grafic3.png><./grafic4.png>]
-<grafic5.png, id=570, 741.52031pt x 414.04688pt>
+<grafic5.png, id=553, 741.52031pt x 414.04688pt>
 File: grafic5.png Graphic file (type png)
 <use grafic5.png>
-Package luatex.def Info: grafic5.png  used on input line 756.
+Package luatex.def Info: grafic5.png  used on input line 761.
 (luatex.def)             Requested size: 253.49762pt x 141.54485pt.
-<grafic6.png, id=571, 475.02469pt x 352.31625pt>
+<grafic6.png, id=554, 475.02469pt x 352.31625pt>
 File: grafic6.png Graphic file (type png)
 <use grafic6.png>
-Package luatex.def Info: grafic6.png  used on input line 760.
+Package luatex.def Info: grafic6.png  used on input line 765.
 (luatex.def)             Requested size: 253.49762pt x 188.01694pt.
-<grafic7.png, id=572, 470.50781pt x 359.84438pt>
+<grafic7.png, id=555, 470.50781pt x 359.84438pt>
 File: grafic7.png Graphic file (type png)
 <use grafic7.png>
-Package luatex.def Info: grafic7.png  used on input line 764.
+Package luatex.def Info: grafic7.png  used on input line 769.
 (luatex.def)             Requested size: 253.49762pt x 193.8738pt.
 
 
@@ -1293,47 +1298,54 @@ Package luatex.def Info: grafic7.png  used on input line 764.
 [26] (./documentatie.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
-L3 programming layer <2024-11-02>
+L3 programming layer <2024-12-25>
  ***********
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: File `documentatie.out' has not changed.
-(rerunfilecheck)             Checksum: 4B4DE9273C2A13F8DA58034D9A8987A1;2834.
+
+Package rerunfilecheck Warning: File `documentatie.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `documentatie.out':
+(rerunfilecheck)             Before: F37FC1BED2D4278D80B3DBFA6B464A22;1910
+(rerunfilecheck)             After:  4B4DE9273C2A13F8DA58034D9A8987A1;2834.
 )
 
 Here is how much of LuaTeX's memory you used:
- 54555 strings out of 475630
- 476926,2373549 words of node,token memory allocated
+ 55139 strings out of 475518
+ 476926,2848258 words of node,token memory allocated
  662 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 41 attribute, 59 glue_spec
 , 41 attribute_list, 2 write nodes
    avail lists: 1:1,2:4502,3:229,4:9916,5:9394,6:78,7:13013,8:69,9:23319,10:43,1
 1:861
- 76066 multiletter control sequences out of 65536+600000
+ 76759 multiletter control sequences out of 65536+600000
  61 fonts using 4256871 bytes
  98i,13n,102p,730b,962s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/users/matei/appdata/local/programs/miktex/fonts/opentype/public/lm/lmmono10-
-italic.otf><c:/users/matei/appdata/local/programs/miktex/fonts/opentype/public/l
-m/lmmono12-regular.otf><c:/users/matei/appdata/local/programs/miktex/fonts/opent
-ype/public/lm/lmmonolt10-bold.otf><c:/users/matei/appdata/local/programs/miktex/
-fonts/opentype/public/lm/lmroman6-regular.otf><c:/users/matei/appdata/local/prog
-rams/miktex/fonts/opentype/public/lm/lmroman12-bold.otf><c:/users/matei/appdata/
-local/programs/miktex/fonts/opentype/public/lm/lmroman12-regular.otf><c:/users/m
-atei/appdata/local/programs/miktex/fonts/opentype/public/lm/lmroman17-regular.ot
-f><C:/Users/matei/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
-mex10.pfb><C:/Users/matei/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmmi12.pfb><C:/Users/matei/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmmi8.pfb><C:/Users/matei/AppData/Local/Programs/MiKTeX/fonts/typ
-e1/public/amsfonts/cm/cmr12.pfb><C:/Users/matei/AppData/Local/Programs/MiKTeX/fo
-nts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/matei/AppData/Local/Programs/MiK
-TeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/matei/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/matei/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on documentatie.pdf (26 pages, 3845372 bytes).
+<//?/c:/users/matei/appdata/local/programs/miktex/fonts/opentype/public/lm/lmmon
+o10-italic.otf><//?/c:/users/matei/appdata/local/programs/miktex/fonts/opentype/
+public/lm/lmmono12-regular.otf><//?/c:/users/matei/appdata/local/programs/miktex
+/fonts/opentype/public/lm/lmmonolt10-bold.otf><//?/c:/users/matei/appdata/local/
+programs/miktex/fonts/opentype/public/lm/lmroman6-regular.otf><//?/c:/users/mate
+i/appdata/local/programs/miktex/fonts/opentype/public/lm/lmroman12-bold.otf><//?
+/c:/users/matei/appdata/local/programs/miktex/fonts/opentype/public/lm/lmroman12
+-regular.otf><//?/c:/users/matei/appdata/local/programs/miktex/fonts/opentype/pu
+blic/lm/lmroman17-regular.otf><C:/Users/matei/AppData/Local/Programs/MiKTeX/font
+s/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/matei/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/matei/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/matei/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/matei/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/mate
+i/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Us
+ers/matei/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb
+><C:/Users/matei/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbo
+ls/msbm10.pfb>
+Output written on documentatie.pdf (26 pages, 3939493 bytes).
 
-PDF statistics: 679 PDF objects out of 1000 (max. 8388607)
- 398 named destinations out of 1000 (max. 131072)
- 152 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 663 PDF objects out of 1000 (max. 8388607)
+ 399 named destinations out of 1000 (max. 131072)
+ 104 words of extra memory for PDF output out of 10000 (max. 100000000)
 
