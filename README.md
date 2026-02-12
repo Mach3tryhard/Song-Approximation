@@ -38,27 +38,31 @@ $$
 Pentru $\forall z_{n,m} = a_{n,m} + ib_{n,m} \in Z$, unde $n \in [0, N], m \in [0, M]$, există $\theta_{n,m} = \tan^{-1} \left( \frac{b_{n,m}}{a_{n,m}} \right)$.
 
 Matricea de fază $\varphi$:
+
 $$
 \varphi =
 \begin{bmatrix}
 \theta_{1,1} & \theta_{1,2} & \dots & \theta_{1,N} \\
 \theta_{2,1} & \theta_{2,2} & \dots & \theta_{2,N} \\
-\dots & \dots & \dots & \dots \\
+\vdots & \vdots & \ddots & \vdots \\
 \theta_{M,1} & \theta_{M,2} & \dots & \theta_{M,N}
 \end{bmatrix}
 $$
 
 Descompunerea SVD:
+
 $$
 A \approx U\Sigma V^* = \sum_{i=1}^{k} \sigma_i u_i v_i^* = B
 $$
 
 Reconstrucția funcției complexe:
+
 $$
 G(i, j) = B_{i,j} + \varphi_{i,j}, \quad B \in \mathcal{M}_{N,M}(\mathbb{C})
 $$
 
 Transformata inversă (ecuația 1):
+
 $$
 g(t) = w(t^{-1}-\tau) \frac{1}{2\pi} \sum_{\omega=0}^{N-1} G(\tau, \omega)e^{+i\omega t}
 $$
